@@ -90,6 +90,15 @@
   .managebar button:active{background:var(--line-soft);}
   .managebar svg{width:15px; height:15px;}
 
+  /* Install banner */
+  .installbar{position:fixed; left:12px; right:12px; bottom:calc(env(safe-area-inset-bottom) + 12px); z-index:70; background:var(--ink); color:var(--paper); border-radius:16px; padding:11px 11px 11px 13px; display:flex; align-items:center; gap:11px; box-shadow:var(--shadow-lg); max-width:456px; margin:0 auto;}
+  .installbar .ib-ic{width:34px; height:34px; border-radius:9px; background:var(--jade); display:grid; place-items:center; flex:none;}
+  .installbar .ib-txt{flex:1; min-width:0; line-height:1.28;}
+  .installbar .ib-txt b{font-size:14px; font-weight:650; display:block;}
+  .installbar .ib-txt span{font-size:12px; opacity:.72;}
+  .installbar .ib-btn{flex:none; background:var(--paper); color:var(--ink); font-weight:700; font-size:13px; padding:9px 16px; border-radius:11px;}
+  .installbar .ib-x{flex:none; color:var(--paper); opacity:.55; padding:6px; font-size:15px;}
+
   /* Toast */
   .toast{position:fixed; left:50%; bottom:calc(env(safe-area-inset-bottom) + 22px); transform:translateX(-50%) translateY(20px); background:var(--ink); color:var(--paper); padding:13px 16px; border-radius:16px; display:flex; align-items:center; gap:14px; box-shadow:var(--shadow-lg); font-size:14px; font-weight:550; opacity:0; pointer-events:none; transition:opacity .22s, transform .22s; z-index:60; max-width:calc(100% - 40px);}
   .toast.show{opacity:1; transform:translateX(-50%) translateY(0); pointer-events:auto;}
@@ -369,6 +378,13 @@
     <div class="sheet-grip"><span></span></div>
     <div class="sheet-head"><div class="t">Add staff</div><button class="x" id="addClose">✕</button></div>
     <div class="sheet-body" id="addBody"></div>
+  </div>
+
+  <div class="installbar" id="installBar" hidden>
+    <div class="ib-ic"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11 12 3l9 8"/><path d="M5 10v10h14V10"/></svg></div>
+    <div class="ib-txt"><b id="ibTitle">Install this app</b><span id="ibHint">Runs full-screen, works offline</span></div>
+    <button class="ib-btn" id="ibBtn">Install</button>
+    <button class="ib-x" id="ibClose" aria-label="Dismiss">✕</button>
   </div>
 
   <div class="toast" id="toast"><span id="toastMsg"></span><button id="toastAction">Undo</button></div>
@@ -896,6 +912,34 @@ document.getElementById('addClose').onclick=()=>closeSheet('add');
 document.getElementById('addScrim').onclick=()=>closeSheet('add');
 
 (async function(){ await load(); renderDashboard(); })();
+
+/* ---- Install as a standalone app (PWA) ---- */
+(function(){
+  const bar=document.getElementById('installBar');
+  const btn=document.getElementById('ibBtn');
+  const title=document.getElementById('ibTitle');
+  const hint=document.getElementById('ibHint');
+  if(!bar) return;
+  let deferred=null;
+  const standalone=()=> (window.matchMedia&&window.matchMedia('(display-mode: standalone)').matches) || window.navigator.standalone===true;
+  const isIOS=()=> /iphone|ipad|ipod/i.test(navigator.userAgent);
+  const dismissed=()=>{ try{ return sessionStorage.getItem('ibDismiss')==='1'; }catch(e){ return false; } };
+  function show(mode){
+    if(standalone()||dismissed()) return;
+    if(mode==='ios'){ btn.style.display='none'; title.textContent='Add to Home Screen'; hint.textContent='Tap Share ⬆, then “Add to Home Screen”'; }
+    else { btn.style.display=''; title.textContent='Install this app'; hint.textContent='Runs full-screen, works offline'; }
+    bar.hidden=false;
+  }
+  window.addEventListener('beforeinstallprompt', e=>{ e.preventDefault(); deferred=e; show('android'); });
+  window.addEventListener('appinstalled', ()=>{ bar.hidden=true; });
+  btn.onclick=async()=>{ if(deferred){ deferred.prompt(); try{ await deferred.userChoice; }catch(e){} deferred=null; bar.hidden=true; } };
+  document.getElementById('ibClose').onclick=()=>{ bar.hidden=true; try{ sessionStorage.setItem('ibDismiss','1'); }catch(e){} };
+  if(isIOS() && !standalone()){ setTimeout(()=>show('ios'), 1400); }
+})();
+
+if('serviceWorker' in navigator && location.protocol.startsWith('http')){
+  window.addEventListener('load', ()=>{ navigator.serviceWorker.register('sw.js').catch(()=>{}); });
+}
 </script>
 </body>
 </html>
