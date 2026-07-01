@@ -113,6 +113,9 @@
   .chip.clean{background:var(--jade-soft); color:#2C463B;} .chip.clean .dot{background:var(--jade);}
   .chip.over{background:#F1E1D6; color:#8A3F22;} .chip.over .dot{background:var(--red);}
   .chip.adv{background:var(--brass-soft); color:#7E6330; cursor:pointer;} .chip.adv .dot{background:var(--brass);}
+  .chip.due{background:var(--brass-soft); color:#7E6330;} .chip.due .dot{background:var(--brass);}
+  .chip.credit{background:var(--jade-soft); color:#2C463B;} .chip.credit .dot{background:var(--jade);}
+  .chip.settled{background:var(--line-soft); color:var(--ink-soft);} .chip.settled .dot{background:var(--ink-faint);}
 
   .btn{height:50px; border-radius:16px; font-size:15.5px; font-weight:600; letter-spacing:-.1px; display:flex; align-items:center; justify-content:center; gap:8px; transition:transform .12s cubic-bezier(.22,.61,.36,1), box-shadow .2s, background .2s; user-select:none;}
   .btn:active{transform:scale(.975);}
@@ -123,6 +126,8 @@
   .actions2 .btn{flex:1; height:44px; border-radius:13px; font-size:14px;}
   .btn-ghost{background:var(--card); color:var(--jade); box-shadow:inset 0 0 0 1.5px var(--line);}
   .btn-ghost.owed{color:#7E6330; box-shadow:inset 0 0 0 1.5px rgba(171,140,86,.5);}
+  .btn-pay{width:100%; height:46px; border-radius:14px; margin-top:10px; background:var(--card); color:var(--ink); box-shadow:inset 0 0 0 1.5px var(--brass), 0 4px 12px rgba(171,140,86,.12);}
+  .btn-pay svg{stroke:var(--brass);}
 
   .managebar{display:flex; justify-content:center; margin-top:8px;}
   .managebar button{display:inline-flex; align-items:center; gap:11px; padding:9px 20px 9px 9px; border-radius:999px; font-size:15px; font-weight:600; letter-spacing:-.1px; color:var(--ink); background:var(--card); box-shadow:inset 0 0 0 1px var(--line), var(--shadow); transition:transform .12s;}
@@ -198,6 +203,21 @@
   .rep-dates .rd-m{flex:none; width:104px; color:var(--ink-soft); font-weight:600;}
   .rep-dates .rd-d{flex:1; color:var(--ink); line-height:1.5;}
   .rep-foot{margin-top:20px; padding-top:12px; border-top:1px solid var(--line); font-size:10.5px; color:var(--ink-faint); line-height:1.65;}
+
+  /* Reports generator + statement */
+  .rep-periods{display:grid; grid-template-columns:1fr 1fr; gap:9px;}
+  .rep-periods button{height:46px; border-radius:12px; background:var(--card); color:var(--ink-soft); font-size:13.5px; font-weight:600; box-shadow:inset 0 0 0 1.5px var(--line); transition:transform .12s;}
+  .rep-periods button.on{background:var(--jade); color:#EDE3CC; box-shadow:inset 0 0 0 1.5px var(--jade);}
+  .rep-periods button:active{transform:scale(.97);}
+  .rep-go{width:100%;}
+  .stmt-hero{margin:16px 0 4px; padding:18px; border-radius:18px; text-align:center; background:var(--jade-soft); box-shadow:inset 0 0 0 1px rgba(171,140,86,.28);}
+  .stmt-hero.owed{background:var(--brass-soft);}
+  .stmt-hero .sh-l{font-size:9px; letter-spacing:.6px; text-transform:uppercase; font-weight:700; color:var(--ink-soft);}
+  .stmt-hero .sh-a{font-family:var(--serif); font-size:34px; font-weight:700; line-height:1; margin-top:6px; color:var(--jade);}
+  .stmt-hero.owed .sh-a{color:#8A6A2E;}
+  .stmt-hero .sh-sub{font-size:11.5px; color:var(--ink-faint); margin-top:8px; font-weight:600;}
+  .stmt-table td.bneg{color:#8A6A2E; font-weight:700;}
+  .stmt-table td.bpos{color:var(--jade); font-weight:700;}
 
   /* Sharing */
   .input-full{width:100%; height:50px; border:none; border-radius:14px; background:var(--card); box-shadow:inset 0 0 0 1.5px var(--line); padding:0 16px; font-family:var(--serif); font-size:19px; font-weight:700; color:var(--ink); letter-spacing:-.2px;}
@@ -454,6 +474,10 @@
   .adv-balance .amt{font-size:32px; font-weight:700; margin-top:6px;}
   .adv-balance.zero .amt{color:var(--jade);}
   .adv-balance.owed .amt{color:var(--ochre);}
+  .adv-balance.credit .amt{color:var(--jade);}
+  .pay-quick{display:flex; gap:9px; margin-bottom:11px;}
+  .pay-quick .pq{flex:1; height:44px; border-radius:12px; background:var(--jade-soft); color:var(--jade); font-size:13.5px; font-weight:600; box-shadow:inset 0 0 0 1px rgba(171,140,86,.3); transition:transform .12s;}
+  .pay-quick .pq:active{transform:scale(.97);}
   .adv-form{background:var(--card); border-radius:16px; box-shadow:var(--shadow); padding:14px; margin-bottom:20px; display:flex; flex-direction:column; gap:10px; border:1px solid rgba(231,227,218,.6);}
   .adv-form .frow{display:flex; gap:10px;}
   .adv-form input{flex:1; font-size:15px; padding:12px; border:1.5px solid var(--line); border-radius:12px; background:var(--paper); outline:none; color:var(--ink); min-width:0;}
@@ -517,6 +541,13 @@
     <div class="sheet-body" id="advanceBody"></div>
   </div>
 
+  <div class="scrim" id="paymentScrim"></div>
+  <div class="sheet" id="paymentSheet">
+    <div class="sheet-grip"><span></span></div>
+    <div class="sheet-head"><div class="t" id="paymentTitle">Payment</div><button class="x" id="paymentClose">✕</button></div>
+    <div class="sheet-body" id="paymentBody"></div>
+  </div>
+
   <div class="scrim" id="manageScrim"></div>
   <div class="sheet" id="manageSheet">
     <div class="sheet-grip"><span></span></div>
@@ -575,15 +606,18 @@ const Store={
 function normalizeDB(db){
   db=db||structuredClone(DEFAULT_DB);
   db.settings=db.settings||{rateBasis:'month'};
-  db.leaves=db.leaves||{}; db.advances=db.advances||{};
+  db.leaves=db.leaves||{}; db.advances=db.advances||{}; db.payments=db.payments||{};
   db.categories=db.categories||['Chef','Maid','Night Time','Driver'];
   if(!db.home) db.home='My Home';
   db.staff=db.staff||[];
+  const nowYM=ymStr(new Date().getFullYear(), new Date().getMonth());
   db.staff.forEach(s=>{
     db.leaves[s.id]=db.leaves[s.id]||{};
     db.advances[s.id]=db.advances[s.id]||[];
+    db.payments[s.id]=db.payments[s.id]||[];
     if(!s.lang) s.lang = s.id==='valli'?'ta':(s.id==='ram'?'hi':'none');
     if(!s.rateBasis) s.rateBasis = (db.settings&&db.settings.rateBasis) || 'month';
+    if(!s.since) s.since = nowYM;
     if(!s.color) s.color=COLORS[0];
     if(s.role && !db.categories.includes(s.role)) db.categories.push(s.role);
   });
@@ -679,6 +713,16 @@ function advDeductedTotal(id){ return (DB.advances[id]||[]).filter(e=>e.type==='
 function advBalance(id){ return advGivenTotal(id)-advDeductedTotal(id); }
 function advDeductedInMonth(id,ym){ return (DB.advances[id]||[]).filter(e=>e.type==='deducted'&&(e.date||'').slice(0,7)===ym).reduce((s,e)=>s+e.amount,0); }
 
+/* Payments ledger */
+function paymentsOf(id){ return (DB.payments[id]||[]).slice().sort((a,b)=> a.date<b.date?-1:a.date>b.date?1:0); }
+function paidInMonth(id,ym){ return (DB.payments[id]||[]).filter(p=>(p.date||'').slice(0,7)===ym).reduce((s,p)=>s+p.amount,0); }
+function ymAdd(ym,delta){ const p=ym.split('-').map(Number); const d=new Date(p[0],(p[1]-1)+delta,1); return ymStr(d.getFullYear(),d.getMonth()); }
+function ymList(startYM,endYM){ const out=[]; let cur=startYM, guard=0; while(guard++<600){ out.push(cur); if(cur===endYM) break; cur=ymAdd(cur,1); } return out; }
+function dueForMonth(s,ym){ const p=ym.split('-').map(Number); return computePay(s,p[0],p[1]-1).net; }
+function outstandingThrough(s,endYM){ const since=s.since||endYM; if(endYM<since) return 0; let bal=0; ymList(since,endYM).forEach(ym=>{ bal += dueForMonth(s,ym) - paidInMonth(s.id,ym); }); return bal; }
+function currentOutstanding(s){ return outstandingThrough(s, ymStr(new Date().getFullYear(), new Date().getMonth())); }
+
+
 /* Calc */
 function leaveDaysInMonth(id,y,m){ const map=DB.leaves[id]||{}; const days=[]; const t=daysInMonth(y,m); for(let d=1;d<=t;d++){ if(map[ymdParts(y,m,d)]) days.push(d); } return days; }
 function computePay(staff,y,m){
@@ -707,6 +751,7 @@ function renderDashboard(){
     const c=computePay(s,y,m);
     const onLeaveToday=isCurrent && !!(DB.leaves[s.id]||{})[ymd(now)];
     const bal=advBalance(s.id);
+    const out=outstandingThrough(s, ymStr(y,m));
 
     let chip;
     if(s.paidLeaves>0){
@@ -716,6 +761,9 @@ function renderDashboard(){
       if(c.taken>0) chip=`<span class="chip leave"><span class="dot"></span>${c.taken} leave${c.taken>1?'s':''} this month</span>`;
       else chip=`<span class="chip clean"><span class="dot"></span>Full attendance</span>`;
     }
+    const payChip = out>0 ? `<span class="chip due"><span class="dot"></span>₹${inr(out)} due</span>`
+      : out<0 ? `<span class="chip credit"><span class="dot"></span>₹${inr(-out)} credit</span>`
+      : `<span class="chip settled"><span class="dot"></span>Settled</span>`;
     let hero='';
     if(isCurrent){
       hero = onLeaveToday
@@ -730,8 +778,9 @@ function renderDashboard(){
           <div class="who"><div class="nm">${s.name}</div><div class="rl">${s.role}</div></div>
           <div class="pay"><div class="big"><span class="cur">₹</span><span class="num">${inr(s.salary)}</span></div><div class="per">per month</div></div>
         </div>
-        <div class="statusrow">${chip}</div>
+        <div class="statusrow">${chip}${payChip}</div>
         ${hero}
+        <button class="btn btn-pay" data-pay="${s.id}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="6.5" rx="7" ry="3"/><path d="M5 6.5v11c0 1.7 3.1 3 7 3s7-1.3 7-3v-11"/><path d="M5 12c0 1.7 3.1 3 7 3s7-1.3 7-3"/></svg>Record payment${out>0?' · ₹'+inr(out)+' due':''}</button>
         <div class="actions2">
           <button class="btn btn-ghost ${bal>0?'owed':''}" data-advance="${s.id}">Advance${bal>0?' · ₹'+inr(bal):''}</button>
           <button class="btn btn-ghost" data-slip="${s.id}">Pay slip</button>
@@ -779,6 +828,7 @@ function renderDashboard(){
   document.querySelectorAll('[data-undo]').forEach(b=>b.onclick=()=>unmarkLeaveToday(b.dataset.undo));
   document.querySelectorAll('[data-slip]').forEach(b=>b.onclick=()=>openSlip(b.dataset.slip));
   document.querySelectorAll('[data-advance]').forEach(b=>b.onclick=()=>openAdvance(b.dataset.advance));
+  document.querySelectorAll('[data-pay]').forEach(b=>b.onclick=()=>openPayment(b.dataset.pay));
 }
 
 /* Leave */
@@ -878,6 +928,7 @@ function openSlip(id){
 
 /* Advance — full statement (record given / deducted, see pending) */
 let advStaffId=null, advMode='given';
+let payStaffId=null;
 const SVG_PLUS='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>';
 const SVG_MINUS='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14"/></svg>';
 function openAdvance(id){ advStaffId=id; advMode='given'; renderAdvanceBody(); openSheet('advance'); }
@@ -938,8 +989,70 @@ function renderAdvanceBody(){
   });
 }
 
+/* Payment */
+function openPayment(id){ payStaffId=id; renderPaymentBody(); openSheet('payment'); }
+function renderPaymentBody(){
+  const s=DB.staff.find(x=>x.id===payStaffId); if(!s) return;
+  document.getElementById('paymentTitle').innerHTML=`Payment<small>${s.name}</small>`;
+  const out=currentOutstanding(s);
+  const now=new Date(); const nowYM=ymStr(now.getFullYear(), now.getMonth());
+  const thisDue=dueForMonth(s,nowYM);
+  const today=ymd(now);
+  const pays=paymentsOf(s.id).slice().reverse();
+  const cls = out>0?'owed': out<0?'credit':'zero';
+  const lbl = out>0?'Pending to pay': out<0?'Advance credit':'All settled';
+  const amt = out>0?out : out<0? -out : 0;
+
+  const list = pays.length ? pays.map(p=>`
+    <div class="adv-row">
+      <div class="ic g"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
+      <div class="meta"><div class="ty">Payment received</div><div class="dt">${fmtDateY(p.date)}</div></div>
+      <div class="amt g">₹${inr(p.amount)}</div>
+      <button class="del" data-delpay="${p.id}">✕</button>
+    </div>`).join('') : `<div class="adv-empty">No payments recorded yet.</div>`;
+
+  document.getElementById('paymentBody').innerHTML=`
+    <div class="adv-balance ${cls}">
+      <div class="lbl">${lbl}</div>
+      <div class="amt"><span class="num">₹${inr(amt)}</span></div>
+      <div class="adv-tot"><span>${MONTHS[now.getMonth()]} salary due · ₹${inr(thisDue)}</span></div>
+    </div>
+    <div class="adv-form">
+      <div class="pay-quick">
+        ${out>0?`<button class="pq" data-fill="${out}">Pay full · ₹${inr(out)}</button>`:''}
+        ${thisDue>0&&thisDue!==out?`<button class="pq" data-fill="${thisDue}">This month · ₹${inr(thisDue)}</button>`:''}
+      </div>
+      <div class="frow">
+        <input type="number" inputmode="numeric" id="payAmt" placeholder="Amount ₹">
+        <input type="date" id="payDate" value="${today}">
+      </div>
+      <button class="give" id="payRecord">Record payment</button>
+      <p class="field-hint" style="margin:10px 2px 0;">Pay more than due and the extra becomes a credit for next month. Pay less and the balance stays pending.</p>
+    </div>
+    <div class="m-label" style="margin-top:18px;">Payment history</div>
+    ${list}`;
+
+  document.querySelectorAll('[data-fill]').forEach(b=>b.onclick=()=>{ document.getElementById('payAmt').value=b.dataset.fill; });
+  document.getElementById('payRecord').onclick=async()=>{
+    const v=Math.max(0,parseInt(document.getElementById('payAmt').value||'0',10));
+    const date=document.getElementById('payDate').value||today;
+    if(v<=0){ showToast('Enter an amount first',null); return; }
+    DB.payments[s.id]=DB.payments[s.id]||[];
+    DB.payments[s.id].push({id:uid(),amount:v,date});
+    await save(); renderPaymentBody(); renderDashboard();
+    showToast(`Payment of ₹${inr(v)} recorded`,null);
+  };
+  document.querySelectorAll('[data-delpay]').forEach(b=>b.onclick=async()=>{
+    if(confirm('Delete this payment?')){
+      DB.payments[s.id]=(DB.payments[s.id]||[]).filter(p=>p.id!==b.dataset.delpay);
+      await save(); renderPaymentBody(); renderDashboard();
+    }
+  });
+}
+
 /* Manage */
 let manageView=null;
+let repType='attendance', repStaffId=null, repPeriod='this', repFrom='', repTo='';
 const IC={
   home:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11 12 3l9 8"/><path d="M5 10v10h5v-6h4v6h5V10"/></svg>',
   people:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 20a5.5 5.5 0 0 1 11 0"/><path d="M16 5.2a3.2 3.2 0 0 1 0 5.9M17.5 20a5.5 5.5 0 0 0-2.2-4.4"/></svg>',
@@ -1003,9 +1116,14 @@ function renderManageBody(){
       <div class="tiles">
         <button class="tile" data-view="name"><span class="tile-ic">${IC.home}</span><span class="tile-t">Home name</span><span class="tile-s">${esc(DB.home)}</span></button>
         <button class="tile" data-view="people"><span class="tile-ic">${IC.people}</span><span class="tile-t">People</span><span class="tile-s">${n?n+(n>1?' members':' member'):'None yet'}</span></button>
-        <button class="tile" data-view="attendance"><span class="tile-ic">${IC.cal}</span><span class="tile-t">Attendance</span><span class="tile-s">Leaves, basis &amp; report</span></button>
-        <button class="tile" data-view="sharing"><span class="tile-ic">${IC.share}</span><span class="tile-t">Share</span><span class="tile-s">${SYNC.code?'Synced · 2 phones':'Co-manage'}</span></button>
+        <button class="tile" data-view="attendance"><span class="tile-ic">${IC.cal}</span><span class="tile-t">Attendance</span><span class="tile-s">Leaves &amp; basis</span></button>
+        <button class="tile" data-view="reports"><span class="tile-ic">${IC.doc}</span><span class="tile-t">Reports</span><span class="tile-s">Attendance &amp; payment</span></button>
       </div>
+      <button class="share-wide ${SYNC.code?'on':''}" data-view="sharing">
+        <span class="sw-ic">${IC.share}</span>
+        <span class="sw-txt"><b>${SYNC.code?'Shared household':'Share this household'}</b><small>${SYNC.code?SYNC.code:'Co-manage on two phones'}</small></span>
+        <span class="sw-chev">${IC.chevR}</span>
+      </button>
       <div class="mfoot">Abode · your household ledger</div>`;
     body.querySelectorAll('[data-view]').forEach(b=>b.onclick=()=>{ manageView=b.dataset.view; renderManageBody(); body.scrollTop=0; });
     return;
@@ -1070,6 +1188,42 @@ function renderManageBody(){
       document.getElementById('attReport').onclick=()=>openReport(s.id);
     }
   }
+  else if(manageView==='reports'){
+    setManageTitle('Reports');
+    if(!DB.staff.length){
+      body.innerHTML=`${back}<div class="msec-empty">${IC.doc}<p>No staff yet</p><span>Add someone from the home screen first.</span></div>`;
+    } else {
+      if(!repStaffId || !DB.staff.find(x=>x.id===repStaffId)) repStaffId=DB.staff[0].id;
+      const nowYM=ymStr(new Date().getFullYear(), new Date().getMonth());
+      const staffChips=DB.staff.map(st=>`<button data-rstaff="${st.id}" class="${repStaffId===st.id?'on':''}">${st.name.split(' ')[0]}</button>`).join('');
+      const perChip=(v,l)=>`<button data-rperiod="${v}" class="${repPeriod===v?'on':''}">${l}</button>`;
+      body.innerHTML=`${back}
+        <p class="field-hint" style="margin:0 2px 16px;">Pick a report, a person and a period — then view and save a PDF.</p>
+
+        <div class="att-h">Report</div>
+        <div class="seg seg-wide rep-type"><button data-rtype="attendance" class="${repType==='attendance'?'on':''}">Attendance</button><button data-rtype="payment" class="${repType==='payment'?'on':''}">Payment</button></div>
+
+        <div class="att-h" style="margin-top:20px;">Person</div>
+        <div class="m-cal-staff">${staffChips}</div>
+
+        <div class="att-h" style="margin-top:20px;">Period</div>
+        <div class="rep-periods">${perChip('this','This month')}${perChip('last','Last month')}${perChip('l3','Last 3 months')}${perChip('custom','Custom')}</div>
+        ${repPeriod==='custom'?`<div class="frow" style="margin-top:11px;"><input type="month" id="repFrom" value="${repFrom||ymAdd(nowYM,-2)}" max="${nowYM}"><input type="month" id="repTo" value="${repTo||nowYM}" max="${nowYM}"></div>`:''}
+
+        <button class="btn btn-primary rep-go" id="repGo" style="margin-top:22px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></svg>Generate ${repType==='attendance'?'attendance report':'payment statement'}</button>`;
+
+      document.querySelectorAll('[data-rtype]').forEach(b=>b.onclick=()=>{ repType=b.dataset.rtype; renderManageBody(); });
+      document.querySelectorAll('[data-rstaff]').forEach(b=>b.onclick=()=>{ repStaffId=b.dataset.rstaff; renderManageBody(); });
+      document.querySelectorAll('[data-rperiod]').forEach(b=>b.onclick=()=>{ repPeriod=b.dataset.rperiod; renderManageBody(); });
+      const rf=document.getElementById('repFrom'); if(rf) rf.onchange=()=>{ repFrom=rf.value; };
+      const rt=document.getElementById('repTo'); if(rt) rt.onchange=()=>{ repTo=rt.value; };
+      document.getElementById('repGo').onclick=()=>{
+        if(repPeriod==='custom'){ const f=document.getElementById('repFrom'); const t=document.getElementById('repTo'); repFrom=f?f.value:repFrom; repTo=t?t.value:repTo; }
+        const months=periodMonths(repPeriod, repFrom, repTo);
+        if(repType==='attendance') openReport(repStaffId, months); else openStatement(repStaffId, months);
+      };
+    }
+  }
   else if(manageView==='sharing'){
     setManageTitle('Sharing');
     body.innerHTML=`${back}
@@ -1103,15 +1257,14 @@ function drawEditCal(){
     };
   });
 }
-function openReport(id){
+function openReport(id, monthsYM){
   const s=DB.staff.find(x=>x.id===id); if(!s) return;
-  const anchor=firstOfMonth(attDate);
-  const months=[]; for(let i=5;i>=0;i--) months.push(new Date(anchor.getFullYear(), anchor.getMonth()-i, 1));
-  const rows=months.map(d=>{ const yy=d.getFullYear(), mm=d.getMonth(); return {yy,mm,c:computePay(s,yy,mm)}; });
+  if(!monthsYM || !monthsYM.length){ const endYM=ymStr(attDate.getFullYear(), attDate.getMonth()); monthsYM=[]; for(let i=5;i>=0;i--) monthsYM.push(ymAdd(endYM,-i)); }
+  const rows=monthsYM.map(ym=>{ const p=ym.split('-').map(Number); const yy=p[0], mm=p[1]-1; return {yy,mm,c:computePay(s,yy,mm)}; });
   const tot=rows.reduce((a,r)=>{ a.leaves+=r.c.taken; a.paid+=r.c.paid; a.unpaid+=r.c.deductible; a.worked+=r.c.worked; a.ded+=r.c.leaveDeduction; return a; },{leaves:0,paid:0,unpaid:0,worked:0,ded:0});
   const maxLeave=Math.max(1,...rows.map(r=>r.c.taken));
-  const first=months[0], last=anchor;
-  const period=`${MONTHS[first.getMonth()]} ${first.getFullYear()} – ${MONTHS[last.getMonth()]} ${last.getFullYear()}`;
+  const fm=rows[0], lm=rows[rows.length-1];
+  const period = rows.length===1 ? `${MONTHS[fm.mm]} ${fm.yy}` : `${MONTHS[fm.mm]} ${fm.yy} – ${MONTHS[lm.mm]} ${lm.yy}`;
   const genDate=fmtDate(ymd(new Date()));
   const datesRows=rows.filter(r=>r.c.taken).map(r=>`<div class="rep-dates"><span class="rd-m">${MONTHS[r.mm]} ${r.yy}</span><span class="rd-d">${r.c.leaveDays.map(d=>d+' '+MONTHS[r.mm].slice(0,3)).join(', ')}</span></div>`).join('');
 
@@ -1153,6 +1306,71 @@ function openReport(id){
       ${datesRows || '<div class="calc-line" style="padding:8px 0;">No leaves recorded in this period.</div>'}
 
       <div class="rep-foot">${s.paidLeaves>0?`Free leaves allowed: ${s.paidLeaves} per month before any cut. `:''}Deduction basis: monthly salary ÷ ${s.rateBasis==='30'?'30 days (fixed)':'the number of days in each month'}. Prepared with Abode · your household ledger.</div>
+    </div>
+    <div class="slip-actions report-actions"><button class="btn btn-primary" id="printReport"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 14h12v8H6z"/></svg>Save / Print PDF</button></div>`;
+  document.getElementById('printReport').onclick=()=>window.print();
+  openSheet('report');
+}
+
+function periodMonths(period, fromYM, toYM){
+  const nowYM=ymStr(new Date().getFullYear(), new Date().getMonth());
+  if(period==='this') return [nowYM];
+  if(period==='last') return [ymAdd(nowYM,-1)];
+  if(period==='l3') return [ymAdd(nowYM,-2), ymAdd(nowYM,-1), nowYM];
+  if(period==='custom' && fromYM && toYM){ return fromYM<=toYM ? ymList(fromYM,toYM) : ymList(toYM,fromYM); }
+  return [nowYM];
+}
+function openStatement(id, monthsYM){
+  const s=DB.staff.find(x=>x.id===id); if(!s) return;
+  if(!monthsYM||!monthsYM.length) monthsYM=[ymStr(new Date().getFullYear(), new Date().getMonth())];
+  const since=s.since||monthsYM[0];
+  const firstYM=monthsYM[0];
+  let running=outstandingThrough(s, ymAdd(firstYM,-1));
+  const opening=running;
+  const rows=monthsYM.map(ym=>{ const due=(ym>=since?dueForMonth(s,ym):0); const paid=paidInMonth(s.id,ym); running=running+due-paid; return {ym, due, paid, bal:running}; });
+  const totalDue=rows.reduce((a,r)=>a+r.due,0);
+  const totalPaid=rows.reduce((a,r)=>a+r.paid,0);
+  const closing=running;
+  const label=(ym)=>{ const p=ym.split('-').map(Number); return MONTHS[p[1]-1].slice(0,3)+" '"+String(p[0]).slice(2); };
+  const fm=firstYM, lm=monthsYM[monthsYM.length-1];
+  const period = monthsYM.length===1 ? (()=>{const p=fm.split('-').map(Number);return MONTHS[p[1]-1]+' '+p[0];})() : `${label(fm)} – ${label(lm)}`;
+  const genDate=fmtDate(ymd(new Date()));
+  const closeCls = closing>0?'owed': closing<0?'credit':'zero';
+  const closeLbl = closing>0?'Pending to pay': closing<0?'Advance credit':'Fully settled';
+  const closeAmt = closing>0?closing : closing<0? -closing : 0;
+
+  document.getElementById('reportTitle').innerHTML=`Statement<small>${s.name}</small>`;
+  document.getElementById('reportBody').innerHTML=`
+    <div class="report" id="reportPrint">
+      <div class="slip-mast">
+        <div class="brand"><span class="mglyph"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11 12 3l9 8"/><path d="M5 10v10h14V10"/></svg></span><span class="mword">${esc(DB.home)}</span></div>
+        <div class="mdoc"><div class="meyebrow">Payment Statement</div><div class="mmo">${period}</div></div>
+      </div>
+      <div class="slip-person">
+        <div class="avatar" style="background:${s.color}">${initials(s.name)}</div>
+        <div><div class="nm">${s.name}</div><div class="rl">${s.role}</div></div>
+        <div class="slip-monthly"><div class="ml">Generated</div><div class="mv">${genDate}</div></div>
+      </div>
+
+      <div class="stmt-hero ${closeCls}">
+        <div class="sh-l">${closeLbl}</div>
+        <div class="sh-a">₹${inr(closeAmt)}</div>
+        <div class="sh-sub">Billed ₹${inr(totalDue)} · Paid ₹${inr(totalPaid)}${opening?` · Opening ₹${inr(Math.abs(opening))}${opening<0?' cr':''}`:''}</div>
+      </div>
+
+      <div class="doc-h" style="margin-top:20px;">Month by month</div>
+      <table class="rep-table stmt-table">
+        <thead><tr><th>Month</th><th>Salary due</th><th>Paid</th><th>Balance</th></tr></thead>
+        <tbody>
+          ${rows.map(r=>`<tr><td>${label(r.ym)}</td><td>₹${inr(r.due)}</td><td>${r.paid?'₹'+inr(r.paid):'—'}</td><td class="${r.bal>0?'bneg':r.bal<0?'bpos':''}">${r.bal>0?'₹'+inr(r.bal):r.bal<0?'₹'+inr(-r.bal)+' cr':'✓'}</td></tr>`).join('')}
+          <tr class="rt-total"><td>Total</td><td>₹${inr(totalDue)}</td><td>₹${inr(totalPaid)}</td><td>${closing>0?'₹'+inr(closing):closing<0?'₹'+inr(-closing)+' cr':'✓'}</td></tr>
+        </tbody>
+      </table>
+
+      <div class="doc-h" style="margin-top:22px;">Payments received</div>
+      ${(()=>{ const inRange=paymentsOf(s.id).filter(p=>{const ym=(p.date||'').slice(0,7); return ym>=firstYM&&ym<=lm;}); return inRange.length? inRange.map(p=>`<div class="rep-dates"><span class="rd-m">${fmtDateY(p.date)}</span><span class="rd-d">₹${inr(p.amount)}</span></div>`).join('') : '<div class="calc-line" style="padding:8px 0;">No payments recorded in this period.</div>'; })()}
+
+      <div class="rep-foot">Balance carries forward: an overpayment becomes a credit against the next month; a shortfall stays pending. Prepared with Abode · your household ledger.</div>
     </div>
     <div class="slip-actions report-actions"><button class="btn btn-primary" id="printReport"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 14h12v8H6z"/></svg>Save / Print PDF</button></div>`;
   document.getElementById('printReport').onclick=()=>window.print();
@@ -1211,8 +1429,8 @@ async function createStaff(){
   const salary=Math.max(0,parseInt(document.getElementById('nsSalary').value||'0',10));
   const paidLeaves=Math.max(0,parseInt(document.getElementById('nsLeaves').value||'0',10));
   const id='s'+Date.now().toString(36)+Math.random().toString(36).slice(2,4);
-  DB.staff.push({id,name,role,salary,paidLeaves,lang:addLang,rateBasis:(DB.settings&&DB.settings.rateBasis)||'month',color:COLORS[DB.staff.length%COLORS.length]});
-  DB.leaves[id]={}; DB.advances[id]=[]; manageStaffId=id;
+  DB.staff.push({id,name,role,salary,paidLeaves,lang:addLang,rateBasis:(DB.settings&&DB.settings.rateBasis)||'month',since:ymStr(new Date().getFullYear(),new Date().getMonth()),color:COLORS[DB.staff.length%COLORS.length]});
+  DB.leaves[id]={}; DB.advances[id]=[]; DB.payments[id]=[]; manageStaffId=id;
   await save(); closeSheet('add'); renderDashboard();
   if(document.getElementById('manageSheet').classList.contains('show')) renderManageBody();
   showToast(`${name.split(' ')[0]} added`,null);
@@ -1235,6 +1453,8 @@ document.getElementById('reportClose').onclick=()=>closeSheet('report');
 document.getElementById('reportScrim').onclick=()=>closeSheet('report');
 document.getElementById('advanceClose').onclick=()=>closeSheet('advance');
 document.getElementById('advanceScrim').onclick=()=>closeSheet('advance');
+document.getElementById('paymentClose').onclick=()=>closeSheet('payment');
+document.getElementById('paymentScrim').onclick=()=>closeSheet('payment');
 document.getElementById('manageClose').onclick=()=>closeSheet('manage');
 document.getElementById('manageScrim').onclick=()=>closeSheet('manage');
 document.getElementById('addClose').onclick=()=>closeSheet('add');
