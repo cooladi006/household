@@ -66,21 +66,33 @@
   @media (prefers-reduced-motion: reduce){ .card,.empty-first,.summary{animation:none;} }
 
   /* Header */
-  .topbar{display:flex; align-items:center; justify-content:space-between; padding:12px 2px 6px;}
-  .brand{display:flex; align-items:center; gap:10px; flex:1 1 auto; min-width:0;} .brand .mark{flex:none;}
+  .topbar{display:flex; align-items:center; justify-content:space-between; padding:14px 2px 8px; gap:12px;}
+  .brand{display:flex; align-items:center; gap:11px; flex:1 1 auto; min-width:0;} .brand .mark{flex:none;}
   .brand .mark{width:40px; height:40px; border-radius:12px; background:linear-gradient(158deg,#3C5C4F,#263D33); display:grid; place-items:center; box-shadow:0 8px 20px rgba(34,57,47,.28), inset 0 0 0 1px rgba(171,140,86,.6), inset 0 1px 0 rgba(255,255,255,.18);}
   .brand .mark svg{width:18px; height:18px; stroke:#EDE3CC;}
-  .brand .name{font-family:var(--serif); font-size:24px; letter-spacing:-.2px; font-weight:700; line-height:1; color:var(--ink); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
-  .monthnav{display:flex; align-items:center; gap:2px; flex:none;}
-  .monthnav button{width:34px; height:34px; border-radius:50%; display:grid; place-items:center; color:var(--ink-soft); transition:background .15s;}
-  .monthnav button:active{background:var(--line-soft);}
-  .monthnav .label{min-width:84px; text-align:center; font-size:13.5px; font-weight:600; letter-spacing:.3px; color:var(--ink-soft);}
-  .monthnav .label .yr{color:var(--ink-faint); font-weight:500;}
+  .brand .name{font-family:var(--serif); font-size:26px; letter-spacing:-.3px; font-weight:700; line-height:1; color:var(--ink); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+  .gear{width:42px; height:42px; border-radius:13px; display:grid; place-items:center; color:#EDE3CC; background:linear-gradient(158deg,#3C5C4F,#263D33); box-shadow:0 6px 16px rgba(34,57,47,.24), inset 0 0 0 1px rgba(171,140,86,.5), inset 0 1px 0 rgba(255,255,255,.16); flex:none; transition:transform .12s;}
+  .gear:active{transform:scale(.93);}
 
-  .summary{margin:18px 0; padding:16px 20px; background:var(--card); border-radius:18px; border:1px solid rgba(227,220,207,.7); box-shadow:var(--shadow); display:flex; align-items:center; justify-content:space-between;}
-  .summary .lbl{font-size:9.5px; letter-spacing:1.8px; text-transform:uppercase; color:var(--brass); font-weight:700;}
-  .summary .amt{font-family:var(--serif); font-size:26px; font-weight:600; letter-spacing:.2px; line-height:1;}
-  .summary .amt .cur{color:var(--brass); font-weight:600; font-size:17px; font-family:var(--sans); margin-right:2px;}
+  /* Circular add medallion */
+  .add-wrap{display:flex; flex-direction:column; align-items:center; gap:12px; margin:10px 0 6px;}
+  .add-orb{position:relative; width:70px; height:70px; border-radius:50%; background:linear-gradient(158deg,#3C5C4F,#28402F); display:grid; place-items:center; box-shadow:0 14px 30px rgba(34,57,47,.30), inset 0 0 0 1px rgba(171,140,86,.55), inset 0 1px 0 rgba(255,255,255,.18); transition:transform .16s cubic-bezier(.34,1.56,.64,1);}
+  .add-orb:active{transform:scale(.9);}
+  .add-orb svg{width:26px; height:26px; stroke:#EDE3CC; stroke-width:2;}
+  .orb-halo{position:absolute; inset:-9px; border-radius:50%; background:radial-gradient(circle, rgba(47,75,64,.18), rgba(47,75,64,0) 68%); animation:breathe 5s ease-in-out infinite; z-index:-1;}
+  .add-cap{font-family:var(--serif); font-size:16px; font-weight:700; color:var(--ink); letter-spacing:-.2px;}
+  @media (prefers-reduced-motion: reduce){ .orb-halo{animation:none;} }
+
+  .summary{margin:18px 0; padding:0; background:var(--card); border-radius:20px; overflow:hidden;}
+  .summary .month-strip{display:flex; align-items:center; justify-content:center; gap:8px; padding:11px 12px; border-bottom:1px solid var(--line);}
+  .summary .mbtn{width:36px; height:36px; border-radius:50%; display:grid; place-items:center; color:var(--ink-soft); transition:background .15s;}
+  .summary .mbtn:active{background:var(--line-soft);}
+  .summary .ml{min-width:132px; text-align:center; font-size:14px; font-weight:600; letter-spacing:.3px; color:var(--ink);}
+  .summary .ml .yr{color:var(--ink-faint); font-weight:500;}
+  .summary .pay-line{display:flex; align-items:center; justify-content:space-between; padding:15px 20px 16px;}
+  .summary .lbl{font-size:10px; letter-spacing:.4px; text-transform:uppercase; color:var(--brass); font-weight:700;}
+  .summary .amt{font-family:var(--serif); font-size:26px; font-weight:700; letter-spacing:.2px; line-height:1;}
+  .summary .amt .cur{color:var(--brass); font-weight:700; font-size:17px; font-family:var(--sans); margin-right:2px;}
 
   /* Card */
   .card{background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow); padding:20px 20px 18px; margin-bottom:15px; border:1px solid rgba(227,220,207,.72);}
@@ -88,11 +100,11 @@
   .avatar{width:48px; height:48px; border-radius:15px; flex:none; display:grid; place-items:center; font-family:var(--serif); font-weight:600; font-size:19px; letter-spacing:.4px; color:#F3EEE2; box-shadow:inset 0 0 0 1px rgba(255,255,255,.18), inset 0 0 0 3px rgba(255,255,255,.06);}
   .who{flex:1; min-width:0;}
   .who .nm{font-size:18px; font-weight:600; letter-spacing:.1px; line-height:1.15;}
-  .who .rl{font-size:10.5px; color:var(--ink-faint); margin-top:4px; letter-spacing:1.1px; text-transform:uppercase; font-weight:600;}
+  .who .rl{font-size:11px; color:var(--ink-faint); margin-top:4px; letter-spacing:.2px; text-transform:uppercase; font-weight:600;}
   .pay{text-align:right; flex:none;}
   .pay .big{font-family:var(--serif); font-size:20px; font-weight:600;}
   .pay .cur{color:var(--brass); font-weight:600; font-size:14px; font-family:var(--sans);}
-  .pay .per{font-size:9px; color:var(--ink-faint); letter-spacing:.9px; text-transform:uppercase; margin-top:2px;}
+  .pay .per{font-size:9.5px; color:var(--ink-faint); letter-spacing:.2px; text-transform:uppercase; margin-top:2px;}
 
   .statusrow{display:flex; align-items:center; gap:8px; margin:15px 0 14px; flex-wrap:wrap;}
   .chip{display:inline-flex; align-items:center; gap:6px; padding:6px 12px; border-radius:999px; font-size:12px; font-weight:600; letter-spacing:.2px; background:var(--line-soft); color:var(--ink-soft);}
@@ -102,7 +114,7 @@
   .chip.over{background:#F1E1D6; color:#8A3F22;} .chip.over .dot{background:var(--red);}
   .chip.adv{background:var(--brass-soft); color:#7E6330; cursor:pointer;} .chip.adv .dot{background:var(--brass);}
 
-  .btn{height:50px; border-radius:16px; font-size:15px; font-weight:600; letter-spacing:.15px; display:flex; align-items:center; justify-content:center; gap:8px; transition:transform .12s cubic-bezier(.22,.61,.36,1), box-shadow .2s, background .2s; user-select:none;}
+  .btn{height:50px; border-radius:16px; font-size:15.5px; font-weight:600; letter-spacing:-.1px; display:flex; align-items:center; justify-content:center; gap:8px; transition:transform .12s cubic-bezier(.22,.61,.36,1), box-shadow .2s, background .2s; user-select:none;}
   .btn:active{transform:scale(.975);}
   .btn-primary{width:100%; background:linear-gradient(158deg,#3C5C4F,#28402F); color:#F3EEE2; box-shadow:0 10px 24px rgba(34,57,47,.24), inset 0 1px 0 rgba(255,255,255,.16);}
   .btn-marked{width:100%; background:var(--ochre-soft); color:#8A542E; box-shadow:inset 0 0 0 1.5px rgba(176,113,74,.42);}
@@ -112,26 +124,100 @@
   .btn-ghost{background:var(--card); color:var(--jade); box-shadow:inset 0 0 0 1.5px var(--line);}
   .btn-ghost.owed{color:#7E6330; box-shadow:inset 0 0 0 1.5px rgba(171,140,86,.5);}
 
-  .managebar{display:flex; justify-content:center; margin-top:6px;}
-  .managebar button{display:inline-flex; align-items:center; gap:7px; padding:10px 16px; border-radius:999px; font-size:13px; font-weight:600; color:var(--ink-soft); transition:background .15s;}
-  .managebar button:active{background:var(--line-soft);}
-  .managebar svg{width:15px; height:15px;}
+  .managebar{display:flex; justify-content:center; margin-top:8px;}
+  .managebar button{display:inline-flex; align-items:center; gap:11px; padding:9px 20px 9px 9px; border-radius:999px; font-size:15px; font-weight:600; letter-spacing:-.1px; color:var(--ink); background:var(--card); box-shadow:inset 0 0 0 1px var(--line), var(--shadow); transition:transform .12s;}
+  .managebar button:active{transform:scale(.97);}
+  .ma-badge{width:30px; height:30px; border-radius:9px; background:linear-gradient(158deg,#3C5C4F,#263D33); display:grid; place-items:center; box-shadow:inset 0 0 0 1px rgba(171,140,86,.55), inset 0 1px 0 rgba(255,255,255,.16); flex:none;}
+  .ma-badge svg{width:16px; height:16px; stroke:#EDE3CC;}
+
+  /* Manage — tile launcher */
+  .tiles{display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-top:4px;}
+  .tile{position:relative; display:flex; flex-direction:column; align-items:flex-start; aspect-ratio:1/1; padding:18px; border-radius:20px; background:var(--card); box-shadow:var(--shadow), inset 0 1px 0 rgba(255,255,255,.6); border:1px solid rgba(255,255,255,.42); -webkit-backdrop-filter:blur(18px) saturate(118%); backdrop-filter:blur(18px) saturate(118%); transition:transform .14s; text-align:left;}
+  .tile:active{transform:scale(.965);}
+  .tile-ic{width:46px; height:46px; border-radius:14px; display:grid; place-items:center; background:var(--jade-soft); color:var(--jade); box-shadow:inset 0 0 0 1px rgba(171,140,86,.35); margin-bottom:auto;}
+  .tile-ic svg{width:24px; height:24px;}
+  .tile-t{font-family:var(--serif); font-size:19px; font-weight:700; letter-spacing:-.3px; color:var(--ink); margin-top:14px;}
+  .tile-s{font-size:12px; color:var(--ink-faint); margin-top:3px; max-width:100%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+  .share-wide{display:flex; align-items:center; gap:13px; width:100%; margin-top:12px; padding:15px 16px; border-radius:18px; background:var(--card); box-shadow:var(--shadow), inset 0 1px 0 rgba(255,255,255,.6); border:1px solid rgba(255,255,255,.42); text-align:left; transition:transform .14s;}
+  .share-wide:active{transform:scale(.985);}
+  .share-wide.on .sw-ic{background:var(--jade); color:#EDE3CC;}
+  .sw-ic{width:44px; height:44px; border-radius:13px; background:var(--jade-soft); color:var(--jade); display:grid; place-items:center; flex:none; box-shadow:inset 0 0 0 1px rgba(171,140,86,.35);}
+  .sw-ic svg{width:22px; height:22px;}
+  .sw-txt{flex:1; min-width:0; display:flex; flex-direction:column;}
+  .sw-txt b{font-family:var(--serif); font-size:16px; font-weight:700; letter-spacing:-.2px; color:var(--ink);}
+  .sw-txt small{font-size:12px; color:var(--ink-faint); margin-top:2px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+  .sw-chev{color:var(--ink-faint); flex:none;}
+  .mback{display:inline-flex; align-items:center; gap:1px; margin:0 0 16px -4px; padding:6px 12px 6px 4px; border-radius:999px; color:var(--jade); font-size:15px; font-weight:600; transition:background .15s;}
+  .mback:active{background:var(--line-soft);}
+  .msec-title{font-family:var(--serif); font-size:18px; font-weight:700; letter-spacing:-.2px; color:var(--ink); margin:0 2px 12px;}
+  .msec-empty{text-align:center; padding:40px 20px;}
+  .msec-empty svg{width:42px; height:42px; stroke:var(--jade); opacity:.7; margin-bottom:12px;}
+  .msec-empty p{font-family:var(--serif); font-size:19px; font-weight:700; margin:0 0 5px; color:var(--ink);}
+  .msec-empty span{font-size:13px; color:var(--ink-faint); display:block; max-width:240px; margin:0 auto; line-height:1.55;}
+  .seg-wide{width:100%;}
+  .mfoot{text-align:center; margin-top:26px; font-size:11px; color:var(--ink-faint); letter-spacing:.4px;}
+
+  /* Attendance */
+  .att-block{margin-top:20px; padding:16px; border-radius:18px; background:var(--card); box-shadow:var(--shadow), inset 0 1px 0 rgba(255,255,255,.6); border:1px solid rgba(255,255,255,.42);}
+  .att-h{font-family:var(--serif); font-size:16px; font-weight:700; letter-spacing:-.2px; color:var(--ink); margin-bottom:10px;}
+  .att-monthnav{display:flex; align-items:center; justify-content:center; gap:8px; margin:2px 0 6px;}
+  .mbtn2{width:34px; height:34px; border-radius:50%; display:grid; place-items:center; color:var(--ink-soft); transition:background .15s;}
+  .mbtn2:active{background:var(--line-soft);}
+  .att-ml{min-width:150px; text-align:center; font-size:15px; font-weight:600; color:var(--ink);}
+  .att-ml span{color:var(--ink-faint); font-weight:500;}
+  .att-clear{width:100%; margin-top:14px; height:42px; border-radius:12px; background:transparent; color:var(--red); font-size:13.5px; font-weight:600; box-shadow:inset 0 0 0 1.5px rgba(169,85,47,.32);}
+  .att-clear:active{background:rgba(169,85,47,.06);}
+  .att-report{display:flex; align-items:center; gap:13px; width:100%; margin-top:18px; padding:15px 16px; border-radius:18px; background:linear-gradient(158deg,#35564A,#26463A); color:#EDE3CC; box-shadow:0 12px 26px rgba(34,57,47,.26), inset 0 0 0 1px rgba(171,140,86,.4); text-align:left; transition:transform .14s;}
+  .att-report:active{transform:scale(.985);}
+  .ar-ic{width:42px; height:42px; border-radius:12px; background:rgba(237,227,204,.15); display:grid; place-items:center; flex:none;}
+  .ar-ic svg{width:21px; height:21px; stroke:#EDE3CC;}
+  .ar-tx{flex:1; min-width:0; display:flex; flex-direction:column;}
+  .ar-tx b{font-family:var(--serif); font-size:16px; font-weight:700; letter-spacing:-.2px;}
+  .ar-tx small{font-size:12px; color:rgba(237,227,204,.72); margin-top:2px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
+  .ar-cv{color:rgba(237,227,204,.6); flex:none;}
+
+  /* Attendance report */
+  .report{padding:4px 2px;}
+  .rep-sum{display:grid; grid-template-columns:repeat(4,1fr); gap:9px; margin:18px 0 4px;}
+  .rep-tile{padding:13px 6px; border-radius:14px; background:var(--jade-soft); text-align:center; box-shadow:inset 0 0 0 1px rgba(171,140,86,.28);}
+  .rep-tile .rt-n{font-family:var(--serif); font-size:24px; font-weight:700; color:var(--jade); line-height:1;}
+  .rep-tile .rt-l{font-size:8.5px; letter-spacing:.4px; text-transform:uppercase; color:var(--ink-soft); font-weight:700; margin-top:6px;}
+  .rep-bars{display:flex; align-items:flex-end; gap:8px; height:100px; padding:8px 2px 0;}
+  .rb{flex:1; display:flex; flex-direction:column; align-items:center; gap:5px; height:100%;}
+  .rb-bar{flex:1; width:100%; max-width:36px; border-radius:7px 7px 3px 3px; background:var(--line-soft); display:flex; align-items:flex-end; overflow:hidden; box-shadow:inset 0 0 0 1px var(--line);}
+  .rb-bar span{display:block; width:100%; background:linear-gradient(180deg,#3C5C4F,#2A473B); border-radius:7px 7px 0 0; min-height:3px;}
+  .rb-v{font-size:11px; font-weight:700; color:var(--ink); font-variant-numeric:tabular-nums;}
+  .rb-m{font-size:9px; letter-spacing:.3px; text-transform:uppercase; color:var(--ink-faint); font-weight:700;}
+  .rep-table{width:100%; border-collapse:collapse; margin-top:8px; font-size:12.5px;}
+  .rep-table th{font-size:8.5px; letter-spacing:.5px; text-transform:uppercase; color:var(--ink-faint); font-weight:700; text-align:right; padding:0 0 8px; border-bottom:1.5px solid var(--jade-soft);}
+  .rep-table th:first-child{text-align:left;}
+  .rep-table td{padding:8px 0; text-align:right; border-bottom:1px solid var(--line-soft); color:var(--ink); font-variant-numeric:tabular-nums;}
+  .rep-table td:first-child{text-align:left; font-weight:600;}
+  .rep-table .rt-total td{font-weight:700; color:var(--jade); border-bottom:none; border-top:1.5px solid var(--jade-soft); padding-top:9px;}
+  .rep-dates{display:flex; gap:10px; padding:7px 0; border-bottom:1px solid var(--line-soft); font-size:12px;}
+  .rep-dates .rd-m{flex:none; width:104px; color:var(--ink-soft); font-weight:600;}
+  .rep-dates .rd-d{flex:1; color:var(--ink); line-height:1.5;}
+  .rep-foot{margin-top:20px; padding-top:12px; border-top:1px solid var(--line); font-size:10.5px; color:var(--ink-faint); line-height:1.65;}
 
   /* Sharing */
+  .input-full{width:100%; height:50px; border:none; border-radius:14px; background:var(--card); box-shadow:inset 0 0 0 1.5px var(--line); padding:0 16px; font-family:var(--serif); font-size:19px; font-weight:700; color:var(--ink); letter-spacing:-.2px;}
+  .input-full::placeholder{color:var(--ink-faint); font-weight:400;}
+  .input-full:focus{outline:none; box-shadow:inset 0 0 0 1.5px var(--jade);}
+  .field-hint{font-size:12px; color:var(--ink-faint); margin:9px 2px 0; letter-spacing:.2px;}
   .share-note{font-size:12.5px; color:var(--ink-soft); line-height:1.55; margin:2px 2px 12px;}
   .share-code{font-family:var(--serif); font-size:22px; font-weight:700; letter-spacing:2px; color:var(--jade); background:var(--jade-soft); border-radius:13px; padding:14px; text-align:center; margin:2px 0 12px; box-shadow:inset 0 0 0 1px rgba(171,140,86,.4);}
   .share-row{display:flex; justify-content:space-between; align-items:center; margin:2px 2px 8px;}
-  .share-k{font-size:10px; letter-spacing:1.6px; text-transform:uppercase; color:var(--brass); font-weight:700;}
+  .share-k{font-size:11px; letter-spacing:.4px; text-transform:uppercase; color:var(--brass); font-weight:700;}
   .share-status{font-size:11.5px; color:var(--ink-soft); font-weight:600;}
   .share-status[data-s="ok"]{color:#2C463B;} .share-status[data-s="err"]{color:var(--red);} .share-status[data-s="syncing"]{color:var(--ink-faint);}
   .share-actions{display:flex; gap:9px;}
-  .btn2{height:46px; border-radius:14px; font-size:14px; font-weight:600; background:var(--card); color:var(--jade); box-shadow:inset 0 0 0 1.5px var(--line); padding:0 18px; transition:transform .12s;}
+  .btn2{height:46px; border-radius:14px; font-size:15px; font-weight:600; letter-spacing:-.1px; background:var(--card); color:var(--jade); box-shadow:inset 0 0 0 1.5px var(--line); padding:0 18px; transition:transform .12s;}
   .btn2:active{transform:scale(.97);}
   .btn2.primary{background:linear-gradient(158deg,#3C5C4F,#28402F); color:#F3EEE2; box-shadow:0 8px 20px rgba(34,57,47,.22), inset 0 1px 0 rgba(255,255,255,.16); width:100%;}
   .btn2.ghost{color:var(--ink-soft);}
   .share-actions .btn2{flex:1;}
   .share-join{display:flex; gap:9px; margin-top:10px;}
-  .share-join input{flex:1; height:46px; border-radius:14px; border:none; background:var(--card); box-shadow:inset 0 0 0 1.5px var(--line); padding:0 15px; font-size:14px; letter-spacing:1.5px; text-transform:uppercase; color:var(--ink);}
+  .share-join input{flex:1; height:46px; border-radius:14px; border:none; background:var(--card); box-shadow:inset 0 0 0 1.5px var(--line); padding:0 15px; font-size:14px; letter-spacing:.5px; text-transform:uppercase; color:var(--ink);}
   .share-join input::placeholder{letter-spacing:.2px; text-transform:none; color:var(--ink-faint);}
 
   /* Toast */
@@ -143,6 +229,7 @@
   .scrim{position:fixed; inset:0; background:rgba(35,32,27,.34); backdrop-filter:blur(3px); opacity:0; pointer-events:none; transition:opacity .25s; z-index:40;}
   .scrim.show{opacity:1; pointer-events:auto;}
   .sheet{position:fixed; left:0; right:0; bottom:0; z-index:50; background:var(--paper); border-radius:26px 26px 0 0; max-width:480px; margin:0 auto; max-height:94vh; display:flex; flex-direction:column; transform:translateY(100%); transition:transform .34s cubic-bezier(.32,.72,0,1); box-shadow:var(--shadow-lg);}
+  #reportScrim{z-index:65;} #reportSheet{z-index:70;}
   .sheet.show{transform:translateY(0);}
   .sheet-grip{padding:10px 0 2px; display:flex; justify-content:center; flex:none;}
   .sheet-grip span{width:38px; height:5px; border-radius:3px; background:var(--line);}
@@ -173,7 +260,7 @@
   .slip-person .rl{font-size:12.5px; color:var(--ink-soft); margin-top:1px;}
 
   .cal{margin:18px 0 6px;}
-  .cal-title{font-size:11px; letter-spacing:.8px; text-transform:uppercase; color:var(--ink-faint); font-weight:700; margin-bottom:10px; display:flex; justify-content:space-between; align-items:center;}
+  .cal-title{font-size:11px; letter-spacing:.3px; text-transform:uppercase; color:var(--ink-faint); font-weight:700; margin-bottom:10px; display:flex; justify-content:space-between; align-items:center;}
   .cal-grid{display:grid; grid-template-columns:repeat(7,1fr); gap:5px;}
   .cal-dow{font-size:10px; text-align:center; color:var(--ink-faint); font-weight:600; padding-bottom:2px;}
   .cal-cell{aspect-ratio:1; border-radius:9px; display:grid; place-items:center; font-size:12px; font-weight:600; color:var(--ink-soft); background:var(--line-soft); position:relative; user-select:none;}
@@ -265,7 +352,7 @@
   .st-brand{display:flex; align-items:center; gap:10px;}
   .st-mark{width:30px; height:30px; border-radius:8px; background:var(--jade); display:grid; place-items:center; flex:none; -webkit-print-color-adjust:exact; print-color-adjust:exact;}
   .st-mark svg{width:16px; height:16px;}
-  .st-ey{font-size:9.5px; letter-spacing:1.4px; text-transform:uppercase; color:var(--ink-faint); font-weight:700;}
+  .st-ey{font-size:10px; letter-spacing:.4px; text-transform:uppercase; color:var(--ink-faint); font-weight:700;}
   .st-mo{font-family:var(--serif); font-size:20px; font-weight:600; margin-top:1px; line-height:1.1;}
   .st-person{text-align:right;}
   .st-nm{font-size:16px; font-weight:700;}
@@ -273,7 +360,7 @@
 
   .st-grid{display:flex; flex-direction:column; gap:22px; margin-top:16px;}
   .panel{break-inside:avoid;}
-  .panel h3{font-size:10.5px; letter-spacing:1px; text-transform:uppercase; color:var(--jade); font-weight:700; margin:0 0 4px; padding-bottom:7px; border-bottom:1.5px solid var(--jade-soft); display:flex; justify-content:space-between;}
+  .panel h3{font-size:11px; letter-spacing:.3px; text-transform:uppercase; color:var(--jade); font-weight:700; margin:0 0 4px; padding-bottom:7px; border-bottom:1.5px solid var(--jade-soft); display:flex; justify-content:space-between;}
   .panel h3 .sec{color:var(--ink-faint); font-weight:600;}
   .crow{display:flex; justify-content:space-between; align-items:flex-start; gap:12px; padding:9px 0; border-bottom:1px solid var(--line-soft); font-size:13.5px;}
   .clab{color:var(--ink-soft); display:flex; flex-direction:column; gap:1px;}
@@ -307,7 +394,7 @@
 
   /* Manage */
   .m-section{margin-top:22px;}
-  .m-label{font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--brass); font-weight:700; margin:0 2px 13px;}
+  .m-label{font-size:11px; letter-spacing:.4px; text-transform:uppercase; color:var(--brass); font-weight:700; margin:0 2px 13px;}
   .field{background:var(--card); border-radius:14px; box-shadow:var(--shadow); padding:4px 14px; border:1px solid rgba(231,227,218,.6);}
   .field-row{display:flex; align-items:center; justify-content:space-between; gap:10px; padding:11px 0; border-bottom:1px solid var(--line-soft);}
   .field-row:last-child{border-bottom:none;}
@@ -323,9 +410,9 @@
   .se-name{flex:1; font-size:16px; font-weight:650; border:none; background:transparent; outline:none; color:var(--ink); border-bottom:1.5px solid var(--line-soft); padding:5px 0;}
   .se-del{width:36px; height:36px; border-radius:10px; display:grid; place-items:center; color:var(--red); background:#F7E4DE; flex:none;}
   .se-del svg{width:16px; height:16px;}
-  .addstaff{width:100%; height:48px; border-radius:14px; background:var(--ink); color:var(--paper); font-weight:650; font-size:15px; display:flex; align-items:center; justify-content:center; gap:8px; margin-top:6px;}
+  .addstaff{width:100%; height:50px; border-radius:14px; background:var(--ink); color:var(--paper); font-weight:650; font-size:16px; letter-spacing:-.1px; display:flex; align-items:center; justify-content:center; gap:8px; margin-top:6px;}
   .addstaff svg{width:18px; height:18px;}
-  .add-dash{width:100%; height:52px; border-radius:16px; background:var(--card); color:var(--jade); font-weight:600; font-size:15px; display:flex; align-items:center; justify-content:center; gap:9px; box-shadow:inset 0 0 0 1.5px var(--line), var(--shadow); margin-bottom:16px;}
+  .add-dash{width:100%; height:54px; border-radius:16px; background:var(--card); color:var(--jade); font-weight:600; font-size:16.5px; letter-spacing:-.1px; display:flex; align-items:center; justify-content:center; gap:9px; box-shadow:inset 0 0 0 1.5px var(--line), var(--shadow); margin-bottom:16px;}
   .empty-first{background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow); border:1px solid rgba(227,220,207,.72); padding:54px 28px 50px; text-align:center; margin-bottom:16px; position:relative; overflow:hidden;}
   .empty-first::before{content:''; position:absolute; left:0; right:0; top:0; height:3px; background:linear-gradient(90deg,transparent,var(--brass),transparent); opacity:.55;}
   .w-stage{width:136px; height:136px; margin:0 auto 24px; position:relative; display:grid; place-items:center;}
@@ -363,7 +450,7 @@
 
   /* Advance sheet */
   .adv-balance{background:var(--card); border-radius:16px; box-shadow:var(--shadow); padding:18px; text-align:center; margin-bottom:16px; border:1px solid rgba(231,227,218,.6);}
-  .adv-balance .lbl{font-size:11px; letter-spacing:.8px; text-transform:uppercase; color:var(--ink-faint); font-weight:700;}
+  .adv-balance .lbl{font-size:11px; letter-spacing:.3px; text-transform:uppercase; color:var(--ink-faint); font-weight:700;}
   .adv-balance .amt{font-size:32px; font-weight:700; margin-top:6px;}
   .adv-balance.zero .amt{color:var(--jade);}
   .adv-balance.owed .amt{color:var(--ochre);}
@@ -393,13 +480,13 @@
     @page{ size:A4; margin:14mm; }
     html{ -webkit-print-color-adjust:exact; print-color-adjust:exact; }
     body{background:#fff;}
-    .app,.toast{display:none !important;}
-    .scrim{display:none !important;}
+    .app,.toast,.scrim{display:none !important;}
     #manageSheet,#advanceSheet,#addSheet{display:none !important;}
-    .sheet-grip,.sheet-head,.slip-actions,.sharehint,.slip-adv-ctl{display:none !important;}
+    #slipSheet:not(.show),#reportSheet:not(.show){display:none !important;}
+    .sheet-grip,.sheet-head,.slip-actions,.sharehint,.slip-adv-ctl,.report-actions{display:none !important;}
     .sheet{position:static; transform:none; max-height:none; max-width:none; width:100%; box-shadow:none; background:#fff;}
     .sheet-body{overflow:visible; padding:0;}
-    .slip{box-shadow:none; border:none; padding:0;}
+    .slip,.report{box-shadow:none; border:none; padding:0;}
     .slip-cols{flex-direction:row; gap:12mm; align-items:flex-start;}
     .slip-main{flex:1.45;}
     .slip-side{flex:1; margin-top:0; padding-top:0; border-top:none; border-left:1.5px solid var(--line); padding-left:10mm;}
@@ -412,8 +499,15 @@
   <div class="scrim" id="slipScrim"></div>
   <div class="sheet" id="slipSheet">
     <div class="sheet-grip"><span></span></div>
-    <div class="sheet-head"><div class="t">Salary slip</div><button class="x" id="slipClose">✕</button></div>
+    <div class="sheet-head"><div class="t" id="slipTitle">Salary slip</div><button class="x" id="slipClose">✕</button></div>
     <div class="sheet-body" id="slipBody"></div>
+  </div>
+
+  <div class="scrim" id="reportScrim"></div>
+  <div class="sheet" id="reportSheet">
+    <div class="sheet-grip"><span></span></div>
+    <div class="sheet-head"><div class="t" id="reportTitle">Attendance report</div><button class="x" id="reportClose">✕</button></div>
+    <div class="sheet-body" id="reportBody"></div>
   </div>
 
   <div class="scrim" id="advanceScrim"></div>
@@ -426,7 +520,7 @@
   <div class="scrim" id="manageScrim"></div>
   <div class="sheet" id="manageSheet">
     <div class="sheet-grip"><span></span></div>
-    <div class="sheet-head"><div class="t">Manage</div><button class="x" id="manageClose">✕</button></div>
+    <div class="sheet-head"><div class="t" id="manageTitle">Manage</div><button class="x" id="manageClose">✕</button></div>
     <div class="sheet-body" id="manageBody"></div>
   </div>
 
@@ -457,11 +551,13 @@ const DEFAULT_DB={
   categories:['Chef','Maid','Night Time','Driver'],
   staff:[],
   leaves:{},
-  advances:{}
+  advances:{},
+  payments:{}
 };
 
 let DB=null;
 let viewDate=firstOfMonth(new Date());
+let attDate=firstOfMonth(new Date());
 let manageStaffId=null;
 
 /* Storage — uses Claude storage inside the Claude app, and the phone's own
@@ -487,6 +583,7 @@ function normalizeDB(db){
     db.leaves[s.id]=db.leaves[s.id]||{};
     db.advances[s.id]=db.advances[s.id]||[];
     if(!s.lang) s.lang = s.id==='valli'?'ta':(s.id==='ram'?'hi':'none');
+    if(!s.rateBasis) s.rateBasis = (db.settings&&db.settings.rateBasis) || 'month';
     if(!s.color) s.color=COLORS[0];
     if(s.role && !db.categories.includes(s.role)) db.categories.push(s.role);
   });
@@ -590,7 +687,7 @@ function computePay(staff,y,m){
   const taken=leaveDays.length;
   const paid=Math.min(taken,staff.paidLeaves);
   const deductible=Math.max(0,taken-staff.paidLeaves);
-  const divisor=DB.settings.rateBasis==='30'?30:dim;
+  const divisor=staff.rateBasis==='30'?30:dim;
   const dayRate=staff.salary/divisor;
   const leaveDeduction=Math.round(deductible*dayRate);
   const ym=ymStr(y,m);
@@ -645,13 +742,16 @@ function renderDashboard(){
   document.getElementById('app').innerHTML=`
     <div class="topbar">
       <div class="brand"><div class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11 12 3l9 8"/><path d="M5 10v10h14V10"/></svg></div><div class="name">${esc(DB.home)}</div></div>
-      <div class="monthnav">
-        <button id="prevM"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
-        <div class="label">${MONTHS[m]} <span class="yr">${y}</span></div>
-        <button id="nextM"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
-      </div>
+      <button class="gear" id="openSettings" aria-label="Settings"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></button>
     </div>
-    <div class="summary"><div class="lbl">Payable this month</div><div class="amt"><span class="cur">₹</span><span class="num">${inr(totalNet)}</span></div></div>
+    <div class="summary">
+      <div class="month-strip">
+        <button id="prevM" class="mbtn"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
+        <div class="ml">${MONTHS[m]} <span class="yr">${y}</span></div>
+        <button id="nextM" class="mbtn"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button>
+      </div>
+      <div class="pay-line"><div class="lbl">Payable this month</div><div class="amt"><span class="cur">₹</span><span class="num">${inr(totalNet)}</span></div></div>
+    </div>
     ${cards || `<div class="empty-first welcome">
       <div class="w-stage">
         <div class="w-halo"></div>
@@ -666,12 +766,14 @@ function renderDashboard(){
       <div class="w-title">Welcome home</div>
       <div class="w-sub">Name your home in settings, then add the people who help run it.</div>
     </div>`}
-    <button class="add-dash" id="dashAdd"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>Add staff</button>
-    <div class="managebar"><button id="openManage"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"/></svg>Staff, advances &amp; settings</button></div>`;
+    <div class="add-wrap">
+      <button class="add-orb" id="dashAdd" aria-label="Add staff"><span class="orb-halo"></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>
+      <div class="add-cap">Add staff</div>
+    </div>`;
 
+  var _gear=document.getElementById('openSettings'); if(_gear) _gear.onclick=openManage;
   document.getElementById('prevM').onclick=()=>{ viewDate=new Date(y,m-1,1); renderDashboard(); };
   document.getElementById('nextM').onclick=()=>{ viewDate=new Date(y,m+1,1); renderDashboard(); };
-  document.getElementById('openManage').onclick=openManage;
   document.getElementById('dashAdd').onclick=openAddStaff;
   document.querySelectorAll('[data-leave]').forEach(b=>b.onclick=()=>markLeaveToday(b.dataset.leave));
   document.querySelectorAll('[data-undo]').forEach(b=>b.onclick=()=>unmarkLeaveToday(b.dataset.undo));
@@ -770,6 +872,7 @@ function openSlip(id){
     <div class="sharehint">Or screenshot this slip to share on WhatsApp.</div>`;
 
   document.getElementById('printSlip').onclick=()=>window.print();
+  var _stt=document.getElementById('slipTitle'); if(_stt) _stt.textContent='Salary slip';
   openSheet('slip');
 }
 
@@ -836,19 +939,23 @@ function renderAdvanceBody(){
 }
 
 /* Manage */
-function openManage(){ renderManageBody(); openSheet('manage'); }
-function renderManageBody(){
-  const y=viewDate.getFullYear(), m=viewDate.getMonth();
-  if(manageStaffId && !DB.staff.find(s=>s.id===manageStaffId)) manageStaffId=DB.staff[0]?DB.staff[0].id:null;
+let manageView=null;
+const IC={
+  home:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11 12 3l9 8"/><path d="M5 10v10h5v-6h4v6h5V10"/></svg>',
+  people:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 20a5.5 5.5 0 0 1 11 0"/><path d="M16 5.2a3.2 3.2 0 0 1 0 5.9M17.5 20a5.5 5.5 0 0 0-2.2-4.4"/></svg>',
+  cal:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="16" rx="2.5"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/><path d="m9 15 2 2 4-4"/></svg>',
+  coin:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="6.5" rx="7" ry="3"/><path d="M5 6.5v11c0 1.7 3.1 3 7 3s7-1.3 7-3v-11"/><path d="M5 12c0 1.7 3.1 3 7 3s7-1.3 7-3"/></svg>',
+  share:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="12" r="2.6"/><circle cx="17" cy="6" r="2.6"/><circle cx="17" cy="18" r="2.6"/><path d="M8.3 10.8 14.7 7.2M8.3 13.2l6.4 3.6"/></svg>',
+  doc:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h4"/></svg>',
+  chevL:'<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>',
+  chevR:'<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>'
+};
+function openManage(){ manageView=null; renderManageBody(); openSheet('manage'); }
+function setManageTitle(t){ var el=document.getElementById('manageTitle'); if(el) el.textContent=t; }
 
-  const langSeg=(s)=>`
-    <div class="seg">
-      <button data-lang="none" data-id="${s.id}" class="${s.lang==='none'?'on':''}">English</button>
-      <button data-lang="ta" data-id="${s.id}" class="${s.lang==='ta'?'on':''}">தமிழ்</button>
-      <button data-lang="hi" data-id="${s.id}" class="${s.lang==='hi'?'on':''}">हिन्दी</button>
-    </div>`;
-
-  const staffCards=DB.staff.map(s=>`
+function staffCardsHTML(){
+  const langSeg=(s)=>`<div class="seg"><button data-lang="none" data-id="${s.id}" class="${s.lang==='none'?'on':''}">English</button><button data-lang="ta" data-id="${s.id}" class="${s.lang==='ta'?'on':''}">தமிழ்</button><button data-lang="hi" data-id="${s.id}" class="${s.lang==='hi'?'on':''}">हिन्दी</button></div>`;
+  return DB.staff.map(s=>`
     <div class="staff-edit">
       <div class="se-head">
         <div class="avatar" style="background:${s.color}">${initials(s.name)}</div>
@@ -862,67 +969,8 @@ function renderManageBody(){
         <div class="field-row"><label>Slip language</label>${langSeg(s)}</div>
       </div>
     </div>`).join('');
-
-  const staffToggle=DB.staff.map(s=>`<button data-mstaff="${s.id}" class="${manageStaffId===s.id?'on':''}">${s.name.split(' ')[0]}</button>`).join('');
-
-  document.getElementById('manageBody').innerHTML=`
-    <div class="m-section">
-      <div class="m-label">Home name</div>
-      <div class="field"><div class="field-row"><label>Shows on dashboard &amp; slips</label><input type="text" id="homeName" value="${esc(DB.home)}" style="width:150px;"></div></div>
-    </div>
-
-    <div class="m-section">
-      <div class="m-label">Sharing</div>
-      ${SYNC.code ? `
-        <div class="share-row"><span class="share-k">Household code</span><span class="share-status" id="syncState" data-s="ok">Synced</span></div>
-        <div class="share-code">${SYNC.code}</div>
-        <div class="share-actions"><button class="btn2" id="copyCode">Copy code</button><button class="btn2 ghost" id="stopShare">Stop on this phone</button></div>
-        <p class="share-note">Anyone with this code can view and edit this household. Share it only with people you trust — like a house key.</p>
-      ` : `
-        <p class="share-note">This household stays only on this phone. Share it to co-manage with your partner — both phones edit the same records, live.</p>
-        <button class="btn2 primary" id="shareBtn">Share this household</button>
-        <div class="share-join"><input type="text" id="joinCode" placeholder="Enter a code" autocapitalize="characters" autocomplete="off"><button class="btn2" id="joinBtn">Join</button></div>
-      `}
-    </div>
-
-    <div class="m-section">
-      <div class="m-label">Staff</div>
-      ${staffCards}
-      <button class="addstaff" id="addStaff"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>Add staff</button>
-    </div>
-
-    <div class="m-section">
-      <div class="m-label">Fix a missed leave · ${MONTHS[m]} ${y}</div>
-      ${DB.staff.length?`<div class="m-cal-staff">${staffToggle}</div><p class="m-cal-hint">Tap any date to add or remove a leave.</p><div id="editCal"></div>
-      <div class="legend" style="margin-top:14px;"><span><i style="background:var(--jade-soft)"></i> Worked</span><span><i style="background:var(--ochre)"></i> Leave</span></div>`:'<p class="m-cal-hint">Add a staff member first.</p>'}
-    </div>
-
-    <div class="m-section">
-      <div class="m-label">Deduction basis</div>
-      <div class="field"><div class="field-row"><label>Per-day rate is salary ÷</label>
-        <div class="seg"><button data-basis="month" class="${DB.settings.rateBasis==='month'?'on':''}">Days in month</button><button data-basis="30" class="${DB.settings.rateBasis==='30'?'on':''}">30</button></div>
-      </div></div>
-    </div>
-
-    <div class="m-section">
-      <div class="m-label">Reset</div>
-      <button class="danger" id="clearMonth">Clear all leaves in ${MONTHS[m]} ${y}</button>
-    </div>
-
-    <div style="text-align:center; margin-top:26px; font-size:11px; color:var(--ink-faint); letter-spacing:.5px;">Abode · your household ledger</div>`;
-
-  if(DB.staff.length) drawEditCal();
-
-  document.getElementById('addStaff').onclick=openAddStaff;
-  const _sh=document.getElementById('shareBtn'); if(_sh) _sh.onclick=shareHousehold;
-  const _jn=document.getElementById('joinBtn'); if(_jn) _jn.onclick=()=>joinHousehold(document.getElementById('joinCode').value);
-  const _cp=document.getElementById('copyCode'); if(_cp) _cp.onclick=()=>{ try{ navigator.clipboard.writeText(SYNC.code); showToast('Code copied'); }catch(e){ showToast(SYNC.code); } };
-  const _st=document.getElementById('stopShare'); if(_st) _st.onclick=()=>{ if(confirm('Stop syncing on this phone? Your current data stays here, but changes will no longer sync.')) stopSharing(); };
-  const hn=document.getElementById('homeName');
-  if(hn) hn.onchange=async()=>{ DB.home=hn.value.trim()||DB.home; await save(); renderDashboard(); };
-  document.querySelectorAll('[data-mstaff]').forEach(b=>b.onclick=()=>{ manageStaffId=b.dataset.mstaff; renderManageBody(); });
-  document.querySelectorAll('[data-basis]').forEach(b=>b.onclick=async()=>{ DB.settings.rateBasis=b.dataset.basis; await save(); renderManageBody(); renderDashboard(); });
-  document.querySelectorAll('[data-lang]').forEach(b=>b.onclick=async()=>{ const s=DB.staff.find(x=>x.id===b.dataset.id); s.lang=b.dataset.lang; await save(); renderManageBody(); });
+}
+function wirePeople(){
   document.querySelectorAll('[data-del]').forEach(b=>b.onclick=()=>deleteStaff(b.dataset.del));
   document.querySelectorAll('[data-staffcat]').forEach(b=>b.onclick=async()=>{
     const id=b.dataset.staffcat, cat=b.dataset.cat; const s=DB.staff.find(x=>x.id===id); if(!s) return;
@@ -930,6 +978,7 @@ function renderManageBody(){
     else s.role=cat;
     await save(); renderManageBody(); renderDashboard();
   });
+  document.querySelectorAll('[data-lang]').forEach(b=>b.onclick=async()=>{ const s=DB.staff.find(x=>x.id===b.dataset.id); s.lang=b.dataset.lang; await save(); renderManageBody(); });
   document.querySelectorAll('[data-edit]').forEach(inp=>{
     inp.onchange=async()=>{
       const s=DB.staff.find(x=>x.id===inp.dataset.id); const f=inp.dataset.edit;
@@ -940,16 +989,110 @@ function renderManageBody(){
       if(f==='name'||f==='role') renderManageBody();
     };
   });
-  document.getElementById('clearMonth').onclick=async()=>{
-    const label=MONTHS[m]+' '+y; const prefix=ymStr(y,m);
-    if(confirm('Clear every recorded leave in '+label+' for all staff?')){
-      DB.staff.forEach(s=>{ const map=DB.leaves[s.id]||{}; Object.keys(map).forEach(k=>{ if(k.startsWith(prefix)) delete map[k]; }); });
-      await save(); if(DB.staff.length) drawEditCal(); renderDashboard(); showToast('Leaves cleared for '+label,null);
+}
+
+function renderManageBody(){
+  const y=viewDate.getFullYear(), m=viewDate.getMonth();
+  if(manageStaffId && !DB.staff.find(s=>s.id===manageStaffId)) manageStaffId=DB.staff[0]?DB.staff[0].id:null;
+  const body=document.getElementById('manageBody');
+
+  if(!manageView){
+    setManageTitle('Manage');
+    const n=DB.staff.length;
+    body.innerHTML=`
+      <div class="tiles">
+        <button class="tile" data-view="name"><span class="tile-ic">${IC.home}</span><span class="tile-t">Home name</span><span class="tile-s">${esc(DB.home)}</span></button>
+        <button class="tile" data-view="people"><span class="tile-ic">${IC.people}</span><span class="tile-t">People</span><span class="tile-s">${n?n+(n>1?' members':' member'):'None yet'}</span></button>
+        <button class="tile" data-view="attendance"><span class="tile-ic">${IC.cal}</span><span class="tile-t">Attendance</span><span class="tile-s">Leaves, basis &amp; report</span></button>
+        <button class="tile" data-view="sharing"><span class="tile-ic">${IC.share}</span><span class="tile-t">Share</span><span class="tile-s">${SYNC.code?'Synced · 2 phones':'Co-manage'}</span></button>
+      </div>
+      <div class="mfoot">Abode · your household ledger</div>`;
+    body.querySelectorAll('[data-view]').forEach(b=>b.onclick=()=>{ manageView=b.dataset.view; renderManageBody(); body.scrollTop=0; });
+    return;
+  }
+
+  const back=`<button class="mback" id="mBack">${IC.chevL}<span>Manage</span></button>`;
+
+  if(manageView==='name'){
+    setManageTitle('Home name');
+    body.innerHTML=`${back}
+      <input type="text" id="homeName" class="input-full" value="${esc(DB.home)}" placeholder="Name your home">
+      <div class="field-hint">Appears on your dashboard and salary slips.</div>`;
+    const hn=document.getElementById('homeName');
+    hn.onchange=async()=>{ DB.home=hn.value.trim()||DB.home; await save(); renderDashboard(); };
+  }
+  else if(manageView==='people'){
+    setManageTitle('People');
+    body.innerHTML=`${back}
+      ${DB.staff.length? staffCardsHTML() : `<div class="msec-empty">${IC.people}<p>No one added yet</p><span>Add people from the home screen using the&nbsp;+&nbsp;button.</span></div>`}`;
+    if(DB.staff.length) wirePeople();
+  }
+  else if(manageView==='attendance'){
+    setManageTitle('Attendance');
+    if(!DB.staff.length){
+      body.innerHTML=`${back}<div class="msec-empty">${IC.cal}<p>No staff yet</p><span>Add someone from the home screen first.</span></div>`;
+    } else {
+      if(!manageStaffId || !DB.staff.find(s=>s.id===manageStaffId)) manageStaffId=DB.staff[0].id;
+      const s=DB.staff.find(x=>x.id===manageStaffId);
+      const ay=attDate.getFullYear(), am=attDate.getMonth();
+      const staffToggle=DB.staff.map(st=>`<button data-mstaff="${st.id}" class="${manageStaffId===st.id?'on':''}">${st.name.split(' ')[0]}</button>`).join('');
+      const takenThis=leaveDaysInMonth(s.id,ay,am).length;
+      body.innerHTML=`${back}
+        <div class="m-cal-staff">${staffToggle}</div>
+
+        <div class="att-block">
+          <div class="att-h">Leave calendar</div>
+          <div class="att-monthnav">
+            <button id="attPrev" class="mbtn2">${IC.chevL}</button>
+            <div class="att-ml">${MONTHS[am]} <span>${ay}</span></div>
+            <button id="attNext" class="mbtn2">${IC.chevR}</button>
+          </div>
+          <p class="m-cal-hint">Tap a date to mark leave · tap again to undo.</p>
+          <div id="editCal"></div>
+          <div class="legend" style="margin-top:14px;"><span><i style="background:var(--jade-soft)"></i> Worked</span><span><i style="background:var(--ochre)"></i> Leave</span></div>
+          ${takenThis?`<button class="att-clear" id="clearMonth">Clear all ${takenThis} leave${takenThis>1?'s':''} in ${MONTHS[am]}</button>`:''}
+        </div>
+
+        <div class="att-block">
+          <div class="att-h">Deduction basis · ${esc(s.name.split(' ')[0])}</div>
+          <p class="field-hint" style="margin:0 0 11px;">Per-day rate = salary ÷ this. Set individually for each person.</p>
+          <div class="seg seg-wide"><button data-basis="month" class="${s.rateBasis==='month'?'on':''}">Days in month</button><button data-basis="30" class="${s.rateBasis==='30'?'on':''}">Fixed 30</button></div>
+        </div>
+
+        <button class="att-report" id="attReport"><span class="ar-ic">${IC.doc}</span><span class="ar-tx"><b>6-month attendance report</b><small>View &amp; export a PDF for ${esc(s.name.split(' ')[0])}</small></span><span class="ar-cv">${IC.chevR}</span></button>`;
+
+      drawEditCal();
+      document.querySelectorAll('[data-mstaff]').forEach(b=>b.onclick=()=>{ manageStaffId=b.dataset.mstaff; renderManageBody(); });
+      document.getElementById('attPrev').onclick=()=>{ attDate=new Date(ay,am-1,1); renderManageBody(); };
+      document.getElementById('attNext').onclick=()=>{ attDate=new Date(ay,am+1,1); renderManageBody(); };
+      document.querySelectorAll('[data-basis]').forEach(b=>b.onclick=async()=>{ s.rateBasis=b.dataset.basis; await save(); renderManageBody(); renderDashboard(); });
+      const cm=document.getElementById('clearMonth'); if(cm) cm.onclick=async()=>{ const label=MONTHS[am]+' '+ay; const prefix=ymStr(ay,am); if(confirm('Clear every recorded leave for '+s.name+' in '+label+'?')){ const map=DB.leaves[s.id]||{}; Object.keys(map).forEach(k=>{ if(k.startsWith(prefix)) delete map[k]; }); await save(); renderManageBody(); renderDashboard(); showToast('Leaves cleared for '+label,null); } };
+      document.getElementById('attReport').onclick=()=>openReport(s.id);
     }
-  };
+  }
+  else if(manageView==='sharing'){
+    setManageTitle('Sharing');
+    body.innerHTML=`${back}
+      ${SYNC.code ? `
+        <div class="share-row"><span class="share-k">Household code</span><span class="share-status" id="syncState" data-s="ok">Synced</span></div>
+        <div class="share-code">${SYNC.code}</div>
+        <div class="share-actions"><button class="btn2" id="copyCode">Copy code</button><button class="btn2 ghost" id="stopShare">Stop on this phone</button></div>
+        <p class="share-note">Anyone with this code can view and edit this household. Share it only with people you trust — like a house key.</p>
+      ` : `
+        <p class="share-note">This household stays only on this phone. Share it to co-manage with your partner — both phones edit the same records, live.</p>
+        <button class="btn2 primary" id="shareBtn">Share this household</button>
+        <div class="share-join"><input type="text" id="joinCode" placeholder="Enter a code" autocapitalize="characters" autocomplete="off"><button class="btn2" id="joinBtn">Join</button></div>
+      `}`;
+    const _sh=document.getElementById('shareBtn'); if(_sh) _sh.onclick=shareHousehold;
+    const _jn=document.getElementById('joinBtn'); if(_jn) _jn.onclick=()=>joinHousehold(document.getElementById('joinCode').value);
+    const _cp=document.getElementById('copyCode'); if(_cp) _cp.onclick=()=>{ try{ navigator.clipboard.writeText(SYNC.code); showToast('Code copied'); }catch(e){ showToast(SYNC.code); } };
+    const _st=document.getElementById('stopShare'); if(_st) _st.onclick=()=>{ if(confirm('Stop syncing on this phone? Your current data stays here, but changes will no longer sync.')) stopSharing(); };
+  }
+
+  const bk=document.getElementById('mBack'); if(bk) bk.onclick=()=>{ manageView=null; renderManageBody(); body.scrollTop=0; };
 }
 function drawEditCal(){
-  const y=viewDate.getFullYear(), m=viewDate.getMonth(); const el=document.getElementById('editCal'); if(!el) return;
+  const y=attDate.getFullYear(), m=attDate.getMonth(); const el=document.getElementById('editCal'); if(!el) return;
   el.innerHTML=renderCalendar(y,m,manageStaffId,{editable:true});
   el.querySelectorAll('[data-day]').forEach(cell=>{
     cell.onclick=async()=>{
@@ -960,6 +1103,62 @@ function drawEditCal(){
     };
   });
 }
+function openReport(id){
+  const s=DB.staff.find(x=>x.id===id); if(!s) return;
+  const anchor=firstOfMonth(attDate);
+  const months=[]; for(let i=5;i>=0;i--) months.push(new Date(anchor.getFullYear(), anchor.getMonth()-i, 1));
+  const rows=months.map(d=>{ const yy=d.getFullYear(), mm=d.getMonth(); return {yy,mm,c:computePay(s,yy,mm)}; });
+  const tot=rows.reduce((a,r)=>{ a.leaves+=r.c.taken; a.paid+=r.c.paid; a.unpaid+=r.c.deductible; a.worked+=r.c.worked; a.ded+=r.c.leaveDeduction; return a; },{leaves:0,paid:0,unpaid:0,worked:0,ded:0});
+  const maxLeave=Math.max(1,...rows.map(r=>r.c.taken));
+  const first=months[0], last=anchor;
+  const period=`${MONTHS[first.getMonth()]} ${first.getFullYear()} – ${MONTHS[last.getMonth()]} ${last.getFullYear()}`;
+  const genDate=fmtDate(ymd(new Date()));
+  const datesRows=rows.filter(r=>r.c.taken).map(r=>`<div class="rep-dates"><span class="rd-m">${MONTHS[r.mm]} ${r.yy}</span><span class="rd-d">${r.c.leaveDays.map(d=>d+' '+MONTHS[r.mm].slice(0,3)).join(', ')}</span></div>`).join('');
+
+  document.getElementById('reportTitle').textContent='Attendance · '+s.name.split(' ')[0];
+  document.getElementById('reportBody').innerHTML=`
+    <div class="report" id="reportPrint">
+      <div class="slip-mast">
+        <div class="brand"><span class="mglyph"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11 12 3l9 8"/><path d="M5 10v10h14V10"/></svg></span><span class="mword">${esc(DB.home)}</span></div>
+        <div class="mdoc"><div class="meyebrow">Attendance Report</div><div class="mmo">${period}</div></div>
+      </div>
+      <div class="slip-person">
+        <div class="avatar" style="background:${s.color}">${initials(s.name)}</div>
+        <div><div class="nm">${s.name}</div><div class="rl">${s.role}</div></div>
+        <div class="slip-monthly"><div class="ml">Generated</div><div class="mv">${genDate}</div></div>
+      </div>
+
+      <div class="rep-sum">
+        <div class="rep-tile"><div class="rt-n">${tot.leaves}</div><div class="rt-l">Leaves</div></div>
+        <div class="rep-tile"><div class="rt-n">${tot.paid}</div><div class="rt-l">Paid</div></div>
+        <div class="rep-tile"><div class="rt-n">${tot.unpaid}</div><div class="rt-l">Unpaid</div></div>
+        <div class="rep-tile"><div class="rt-n">${tot.worked}</div><div class="rt-l">Worked</div></div>
+      </div>
+
+      <div class="doc-h" style="margin-top:20px;">Leaves by month</div>
+      <div class="rep-bars">
+        ${rows.map(r=>`<div class="rb"><div class="rb-bar"><span style="height:${Math.round(r.c.taken/maxLeave*100)}%"></span></div><div class="rb-v">${r.c.taken}</div><div class="rb-m">${MONTHS[r.mm].slice(0,3)}</div></div>`).join('')}
+      </div>
+
+      <div class="doc-h" style="margin-top:22px;">Month by month</div>
+      <table class="rep-table">
+        <thead><tr><th>Month</th><th>Worked</th><th>Leave</th><th>Paid</th><th>Unpaid</th><th>Deducted</th></tr></thead>
+        <tbody>
+          ${rows.map(r=>`<tr><td>${MONTHS[r.mm].slice(0,3)} '${String(r.yy).slice(2)}</td><td>${r.c.worked}</td><td>${r.c.taken}</td><td>${r.c.paid}</td><td>${r.c.deductible}</td><td>${r.c.leaveDeduction?'₹'+inr(r.c.leaveDeduction):'—'}</td></tr>`).join('')}
+          <tr class="rt-total"><td>Total</td><td>${tot.worked}</td><td>${tot.leaves}</td><td>${tot.paid}</td><td>${tot.unpaid}</td><td>${tot.ded?'₹'+inr(tot.ded):'—'}</td></tr>
+        </tbody>
+      </table>
+
+      <div class="doc-h" style="margin-top:22px;">Leave dates</div>
+      ${datesRows || '<div class="calc-line" style="padding:8px 0;">No leaves recorded in this period.</div>'}
+
+      <div class="rep-foot">${s.paidLeaves>0?`Free leaves allowed: ${s.paidLeaves} per month before any cut. `:''}Deduction basis: monthly salary ÷ ${s.rateBasis==='30'?'30 days (fixed)':'the number of days in each month'}. Prepared with Abode · your household ledger.</div>
+    </div>
+    <div class="slip-actions report-actions"><button class="btn btn-primary" id="printReport"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 14h12v8H6z"/></svg>Save / Print PDF</button></div>`;
+  document.getElementById('printReport').onclick=()=>window.print();
+  openSheet('report');
+}
+
 let addLang='none', addRole='';
 function openAddStaff(){
   addLang='none'; addRole=DB.categories[0]||'';
@@ -1012,7 +1211,7 @@ async function createStaff(){
   const salary=Math.max(0,parseInt(document.getElementById('nsSalary').value||'0',10));
   const paidLeaves=Math.max(0,parseInt(document.getElementById('nsLeaves').value||'0',10));
   const id='s'+Date.now().toString(36)+Math.random().toString(36).slice(2,4);
-  DB.staff.push({id,name,role,salary,paidLeaves,lang:addLang,color:COLORS[DB.staff.length%COLORS.length]});
+  DB.staff.push({id,name,role,salary,paidLeaves,lang:addLang,rateBasis:(DB.settings&&DB.settings.rateBasis)||'month',color:COLORS[DB.staff.length%COLORS.length]});
   DB.leaves[id]={}; DB.advances[id]=[]; manageStaffId=id;
   await save(); closeSheet('add'); renderDashboard();
   if(document.getElementById('manageSheet').classList.contains('show')) renderManageBody();
@@ -1032,6 +1231,8 @@ function openSheet(w){ document.getElementById(w+'Scrim').classList.add('show');
 function closeSheet(w){ document.getElementById(w+'Scrim').classList.remove('show'); document.getElementById(w+'Sheet').classList.remove('show'); }
 document.getElementById('slipClose').onclick=()=>closeSheet('slip');
 document.getElementById('slipScrim').onclick=()=>closeSheet('slip');
+document.getElementById('reportClose').onclick=()=>closeSheet('report');
+document.getElementById('reportScrim').onclick=()=>closeSheet('report');
 document.getElementById('advanceClose').onclick=()=>closeSheet('advance');
 document.getElementById('advanceScrim').onclick=()=>closeSheet('advance');
 document.getElementById('manageClose').onclick=()=>closeSheet('manage');
