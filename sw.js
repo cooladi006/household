@@ -1,5 +1,5 @@
 // Abode — service worker (offline app shell + clean PWA install)
-const CACHE = 'abode-v1';
+const CACHE = 'abode-v7';
 const SHELL = ['./', './index.html'];
 
 self.addEventListener('install', (e) => {
