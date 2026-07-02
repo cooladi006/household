@@ -109,6 +109,9 @@
   .statusrow{display:flex; align-items:center; gap:8px; margin:15px 0 14px; flex-wrap:wrap;}
   .chip{display:inline-flex; align-items:center; gap:6px; padding:6px 12px; border-radius:999px; font-size:12px; font-weight:600; letter-spacing:.2px; background:var(--line-soft); color:var(--ink-soft);}
   .chip .dot{width:7px; height:7px; border-radius:50%;}
+  .chip.tap{cursor:pointer; padding-right:10px; transition:transform .12s;}
+  .chip.tap:active{transform:scale(.96);}
+  .chip .chip-cal{width:14px; height:14px; margin-left:4px; opacity:.6;}
   .chip.leave{background:var(--ochre-soft); color:#8A542E;} .chip.leave .dot{background:var(--ochre);}
   .chip.clean{background:var(--jade-soft); color:#2C463B;} .chip.clean .dot{background:var(--jade);}
   .chip.over{background:#F1E1D6; color:#8A3F22;} .chip.over .dot{background:var(--red);}
@@ -159,7 +162,8 @@
   .msec-empty svg{width:42px; height:42px; stroke:var(--jade); opacity:.7; margin-bottom:12px;}
   .msec-empty p{font-family:var(--serif); font-size:19px; font-weight:700; margin:0 0 5px; color:var(--ink);}
   .msec-empty span{font-size:13px; color:var(--ink-faint); display:block; max-width:240px; margin:0 auto; line-height:1.55;}
-  .seg-wide{width:100%;}
+  .seg-wide{width:100%; display:flex; padding:4px;}
+  .seg-wide button{flex:1; text-align:center; padding:12px 10px; font-size:14.5px; font-weight:600; letter-spacing:-.1px; border-radius:11px;}
   .mfoot{text-align:center; margin-top:26px; font-size:11px; color:var(--ink-faint); letter-spacing:.4px;}
 
   /* Attendance */
@@ -206,7 +210,7 @@
 
   /* Reports generator + statement */
   .rep-periods{display:grid; grid-template-columns:1fr 1fr; gap:9px;}
-  .rep-periods button{height:46px; border-radius:12px; background:var(--card); color:var(--ink-soft); font-size:13.5px; font-weight:600; box-shadow:inset 0 0 0 1.5px var(--line); transition:transform .12s;}
+  .rep-periods button{height:48px; border-radius:13px; background:var(--card); color:var(--ink-soft); font-size:14.5px; font-weight:600; letter-spacing:-.1px; box-shadow:inset 0 0 0 1.5px var(--line); transition:transform .12s;}
   .rep-periods button.on{background:var(--jade); color:#EDE3CC; box-shadow:inset 0 0 0 1.5px var(--jade);}
   .rep-periods button:active{transform:scale(.97);}
   .rep-go{width:100%;}
@@ -316,6 +320,14 @@
   .net .k .ta{display:block; font-size:11px; opacity:.8; margin-top:1px;}
   .net .v{font-size:26px; font-weight:700; letter-spacing:.3px;}
   .net .v .cur{opacity:.7; font-size:18px; font-weight:600;}
+  .slip-pay{margin-top:14px;}
+  .balance{margin-top:12px; border-radius:16px; padding:15px 18px; display:flex; align-items:center; justify-content:space-between; color:#fff;}
+  .balance.owed{background:var(--ochre);} .balance.credit{background:var(--jade);} .balance.zero{background:var(--jade);}
+  .balance .k{font-size:13px; font-weight:600; opacity:.95;}
+  .balance .v{font-size:24px; font-weight:700; letter-spacing:.3px;}
+  .balance .v .cur{opacity:.7; font-size:17px; font-weight:600;}
+  .pay-controls{background:var(--card); border-radius:16px; padding:16px; margin-bottom:16px; box-shadow:var(--shadow); border:1px solid rgba(231,227,218,.6);}
+  .pc-head{font-family:var(--serif); font-size:16px; font-weight:700; letter-spacing:-.2px; color:var(--ink); margin-bottom:12px;}
   .slip-foot{text-align:center; font-size:11px; color:var(--ink-faint); margin-top:16px; line-height:1.5;}
   .slip-monthly{margin-left:auto; text-align:right;}
   .slip-monthly .ml{font-size:9.5px; letter-spacing:.9px; text-transform:uppercase; color:var(--ink-faint); font-weight:700;}
@@ -363,6 +375,7 @@
   .aln .aam.g{color:var(--jade);} .aln .aam.d{color:var(--ochre);}
 
   .slip-actions{display:flex; gap:10px; margin-top:16px;}
+  .slip-actions .btn{flex:1;}
   .slip-actions .btn-primary{background:var(--jade);}
   .sharehint{text-align:center; font-size:11.5px; color:var(--ink-faint); margin-top:10px;}
 
@@ -461,7 +474,7 @@
   .ns-langrow span{font-size:14px; color:var(--ink-soft);}
 
   .m-cal-staff{display:flex; gap:8px; overflow-x:auto; padding-bottom:4px; margin-bottom:12px; -webkit-overflow-scrolling:touch;}
-  .m-cal-staff button{flex:none; font-size:13px; font-weight:600; padding:8px 16px; border-radius:10px; color:var(--ink-soft); background:var(--line-soft);}
+  .m-cal-staff button{flex:none; font-size:14px; font-weight:600; letter-spacing:-.1px; padding:9px 18px; border-radius:12px; color:var(--ink-soft); background:var(--line-soft);}
   .m-cal-staff button.on{background:var(--card); color:var(--ink); box-shadow:0 1px 3px rgba(35,32,27,.12);}
   .m-cal-hint{font-size:12.5px; color:var(--ink-soft); text-align:center; margin:8px 0 15px; line-height:1.5;}
 
@@ -501,13 +514,13 @@
 
   @media (prefers-reduced-motion: reduce){ *{transition:none !important;} }
   @media print{
-    @page{ size:A4; margin:14mm; }
+    @page{ size:A4; margin:20mm; }
     html{ -webkit-print-color-adjust:exact; print-color-adjust:exact; }
     body{background:#fff;}
     .app,.toast,.scrim{display:none !important;}
     #manageSheet,#advanceSheet,#addSheet{display:none !important;}
     #slipSheet:not(.show),#reportSheet:not(.show){display:none !important;}
-    .sheet-grip,.sheet-head,.slip-actions,.sharehint,.slip-adv-ctl,.report-actions{display:none !important;}
+    .sheet-grip,.sheet-head,.slip-actions,.sharehint,.slip-adv-ctl,.report-actions,.pay-controls{display:none !important;}
     .sheet{position:static; transform:none; max-height:none; max-width:none; width:100%; box-shadow:none; background:#fff;}
     .sheet-body{overflow:visible; padding:0;}
     .slip,.report{box-shadow:none; border:none; padding:0;}
@@ -751,19 +764,17 @@ function renderDashboard(){
     const c=computePay(s,y,m);
     const onLeaveToday=isCurrent && !!(DB.leaves[s.id]||{})[ymd(now)];
     const bal=advBalance(s.id);
-    const out=outstandingThrough(s, ymStr(y,m));
 
-    let chip;
+    let chipCls, chipTxt;
     if(s.paidLeaves>0){
-      if(c.deductible>0) chip=`<span class="chip over"><span class="dot"></span>${c.taken} leaves · ${c.deductible} over</span>`;
-      else chip=`<span class="chip clean"><span class="dot"></span>${c.taken} of ${s.paidLeaves} paid leaves used</span>`;
+      if(c.deductible>0){ chipCls='over'; chipTxt=`${c.taken} leaves · ${c.deductible} over`; }
+      else { chipCls='clean'; chipTxt=`${c.taken} of ${s.paidLeaves} paid leaves used`; }
     }else{
-      if(c.taken>0) chip=`<span class="chip leave"><span class="dot"></span>${c.taken} leave${c.taken>1?'s':''} this month</span>`;
-      else chip=`<span class="chip clean"><span class="dot"></span>Full attendance</span>`;
+      if(c.taken>0){ chipCls='leave'; chipTxt=`${c.taken} leave${c.taken>1?'s':''} this month`; }
+      else { chipCls='clean'; chipTxt='Full attendance'; }
     }
-    const payChip = out>0 ? `<span class="chip due"><span class="dot"></span>₹${inr(out)} due</span>`
-      : out<0 ? `<span class="chip credit"><span class="dot"></span>₹${inr(-out)} credit</span>`
-      : `<span class="chip settled"><span class="dot"></span>Settled</span>`;
+    const chip=`<button class="chip ${chipCls} tap" data-leaves="${s.id}"><span class="dot"></span>${chipTxt}<svg class="chip-cal" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="5" width="16" height="16" rx="2.4"/><path d="M4 9.5h16M8 3v4M16 3v4"/></svg></button>`;
+    const payChip='';
     let hero='';
     if(isCurrent){
       hero = onLeaveToday
@@ -778,12 +789,11 @@ function renderDashboard(){
           <div class="who"><div class="nm">${s.name}</div><div class="rl">${s.role}</div></div>
           <div class="pay"><div class="big"><span class="cur">₹</span><span class="num">${inr(s.salary)}</span></div><div class="per">per month</div></div>
         </div>
-        <div class="statusrow">${chip}${payChip}</div>
+        <div class="statusrow">${chip}</div>
         ${hero}
-        <button class="btn btn-pay" data-pay="${s.id}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="6.5" rx="7" ry="3"/><path d="M5 6.5v11c0 1.7 3.1 3 7 3s7-1.3 7-3v-11"/><path d="M5 12c0 1.7 3.1 3 7 3s7-1.3 7-3"/></svg>Record payment${out>0?' · ₹'+inr(out)+' due':''}</button>
         <div class="actions2">
           <button class="btn btn-ghost ${bal>0?'owed':''}" data-advance="${s.id}">Advance${bal>0?' · ₹'+inr(bal):''}</button>
-          <button class="btn btn-ghost" data-slip="${s.id}">Pay slip</button>
+          <button class="btn btn-ghost" data-salary="${s.id}">Salary</button>
         </div>
       </div>`;
   }).join('');
@@ -826,9 +836,9 @@ function renderDashboard(){
   document.getElementById('dashAdd').onclick=openAddStaff;
   document.querySelectorAll('[data-leave]').forEach(b=>b.onclick=()=>markLeaveToday(b.dataset.leave));
   document.querySelectorAll('[data-undo]').forEach(b=>b.onclick=()=>unmarkLeaveToday(b.dataset.undo));
-  document.querySelectorAll('[data-slip]').forEach(b=>b.onclick=()=>openSlip(b.dataset.slip));
   document.querySelectorAll('[data-advance]').forEach(b=>b.onclick=()=>openAdvance(b.dataset.advance));
-  document.querySelectorAll('[data-pay]').forEach(b=>b.onclick=()=>openPayment(b.dataset.pay));
+  document.querySelectorAll('[data-salary]').forEach(b=>b.onclick=()=>openSalary(b.dataset.salary));
+  document.querySelectorAll('[data-leaves]').forEach(b=>b.onclick=()=>openAttendanceFor(b.dataset.leaves));
 }
 
 /* Leave */
@@ -844,6 +854,55 @@ async function unmarkLeaveToday(id,key){ key=key||ymd(new Date()); if(DB.leaves[
 let toastTimer=null;
 function showToast(msg,onUndo){ const t=document.getElementById('toast'); document.getElementById('toastMsg').textContent=msg; const b=document.getElementById('toastAction'); b.style.display=onUndo?'block':'none'; b.onclick=()=>{ if(onUndo)onUndo(); }; t.classList.add('show'); clearTimeout(toastTimer); toastTimer=setTimeout(hideToast,4200); }
 function hideToast(){ document.getElementById('toast').classList.remove('show'); }
+
+/* Share a rendered node as a PDF (native share sheet: WhatsApp, Gmail, Drive…) */
+let _pdfLibsP=null;
+function ensureLib(check, src){ return new Promise((res,rej)=>{ if(check()) return res(); const sc=document.createElement('script'); sc.src=src; sc.onload=()=>res(); sc.onerror=()=>rej(new Error('load '+src)); document.head.appendChild(sc); }); }
+function preloadPdfLibs(){
+  if(_pdfLibsP) return _pdfLibsP;
+  _pdfLibsP=Promise.all([
+    ensureLib(()=>window.html2canvas, 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js'),
+    ensureLib(()=>window.jspdf, 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js')
+  ]);
+  return _pdfLibsP;
+}
+async function buildPdfBlob(nodeId){
+  await preloadPdfLibs();
+  const node=document.getElementById(nodeId); if(!node) throw new Error('no node');
+  const canvas=await window.html2canvas(node,{
+    scale:2, backgroundColor:'#ffffff', useCORS:true, logging:false, windowWidth:820,
+    onclone:(doc)=>{ const n=doc.getElementById(nodeId); if(n){ n.style.width='740px'; n.style.maxWidth='740px'; n.style.padding='40px'; n.style.margin='0'; n.style.borderRadius='0'; n.style.boxShadow='none'; n.style.background='#ffffff';
+      const cols=n.querySelector('.slip-cols');
+      if(cols){ cols.style.flexDirection='row'; cols.style.gap='34px'; cols.style.alignItems='flex-start';
+        const main=cols.querySelector('.slip-main'); if(main) main.style.flex='1.4';
+        const side=cols.querySelector('.slip-side'); if(side){ side.style.flex='1'; side.style.borderLeft='1.5px solid #E3DCCF'; side.style.paddingLeft='24px'; side.style.marginTop='0'; side.style.borderTop='none'; side.style.paddingTop='0'; }
+      }
+    } }
+  });
+  const img=canvas.toDataURL('image/jpeg',0.95);
+  const { jsPDF }=window.jspdf; const pdf=new jsPDF('p','mm','a4');
+  const pw=210, ph=297, margin=14;
+  let iw=pw-2*margin, ih=canvas.height*iw/canvas.width;
+  if(ih>ph-2*margin){ ih=ph-2*margin; iw=canvas.width*ih/canvas.height; }
+  pdf.addImage(img,'JPEG',(pw-iw)/2, margin, iw, ih);
+  return pdf.output('blob');
+}
+function downloadBlob(blob, filename){ const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download=filename; document.body.appendChild(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(url),5000); }
+async function shareNode(nodeId, filename, title){
+  showToast('Preparing PDF…', null);
+  let blob;
+  try{ blob=await buildPdfBlob(nodeId); }
+  catch(e){ hideToast(); showToast('Could not build PDF — opening print', null); setTimeout(()=>window.print(), 700); return; }
+  hideToast();
+  const file=new File([blob], filename, {type:'application/pdf'});
+  const canFiles = !!(navigator.canShare && navigator.canShare({files:[file]}));
+  if(navigator.share && canFiles){
+    try{ await navigator.share({files:[file], title:title, text:title}); return; }
+    catch(err){ if(err && err.name==='AbortError') return; }
+  }
+  downloadBlob(blob, filename);
+  showToast('PDF saved to your device — open WhatsApp, Gmail or Drive and attach it', null);
+}
 
 /* Calendar */
 function renderCalendar(y,m,staffId,{editable=false}={}){
@@ -861,17 +920,27 @@ function renderCalendar(y,m,staffId,{editable=false}={}){
   return `<div class="cal-grid">${DOW.map(d=>`<div class="cal-dow">${d}</div>`).join('')}${cells}</div>`;
 }
 
-/* Salary slip */
-function openSlip(id){
+/* Salary — slip with advance deduction + print + share */
+function openSalary(id){
   const s=DB.staff.find(x=>x.id===id); if(!s) return;
+  try{ preloadPdfLibs(); }catch(e){}
   const y=viewDate.getFullYear(), m=viewDate.getMonth(); const c=computePay(s,y,m); const lang=s.lang;
   const entries=advEntries(s.id); const bal=advBalance(s.id);
+  const dedDate = isSameMonth(viewDate,new Date()) ? ymd(new Date()) : ymdParts(y,m,daysInMonth(y,m));
 
   document.getElementById('slipBody').innerHTML=`
+    ${bal>0?`<div class="pay-controls">
+      <div class="pc-head">Deduct advance</div>
+      <p class="field-hint" style="margin:0 0 12px;">Pending advance is ₹${inr(bal)}. Deduct part or all of it from ${MONTHS[m]}'s salary before generating the slip.</p>
+      <div class="pay-quick"><button class="pq" data-fill="${bal}">Deduct all · ₹${inr(bal)}</button></div>
+      <div class="frow"><input type="number" inputmode="numeric" id="advDeductAmt" placeholder="Advance to deduct ₹"></div>
+      <button class="give" id="advDeductBtn">Deduct from this month</button>
+    </div>`:''}
+
     <div class="slip" id="slipPrint">
       <div class="slip-mast">
         <div class="brand"><span class="mglyph"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11 12 3l9 8"/><path d="M5 10v10h14V10"/></svg></span><span class="mword">${esc(DB.home)}</span></div>
-        <div class="mdoc"><div class="meyebrow">Salary Statement</div><div class="mmo">${MONTHS[m]} ${y}${L('statement',lang)?`<span class="ml2">${L('statement',lang)}</span>`:''}</div></div>
+        <div class="mdoc"><div class="meyebrow">Salary Slip</div><div class="mmo">${MONTHS[m]} ${y}${L('statement',lang)?`<span class="ml2">${L('statement',lang)}</span>`:''}</div></div>
       </div>
       <div class="slip-person">
         <div class="avatar" style="background:${s.color}">${initials(s.name)}</div>
@@ -906,23 +975,36 @@ function openSlip(id){
         </div>
       </div>
 
-      <div class="net"><div class="k">Net pay ${sub('netPay',lang)}</div><div class="v"><span class="cur">₹</span><span class="num">${inr(c.net)}</span></div></div>
+      <div class="net"><div class="k">Net salary paid ${sub('netPay',lang)}</div><div class="v"><span class="cur">₹</span><span class="num">${inr(c.net)}</span></div></div>
       <div class="slip-words">Rupees ${words(c.net)} only</div>
 
       <div class="slip-foot">
-        ${c.advDed>0?`Advance of ₹${inr(c.advDed)} adjusted in this month's pay. `:''}Net pay = Salary − Leave deduction − Advance deducted.
+        ${c.advDed>0?`Advance of ₹${inr(c.advDed)} adjusted in this month's pay. `:''}Net salary = Salary − Leave deduction${c.advDed>0?' − Advance deducted':''}.
         <br>Generated ${new Date().toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'})}
       </div>
       <div class="slip-ack"><div>Paid by</div><div>Received by (signature &amp; date)</div></div>
     </div>
 
     <div class="slip-actions">
-      <button class="btn btn-primary" id="printSlip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 14h12v8H6z"/></svg>Save / Print PDF</button>
+      <button class="btn btn-primary" id="printSlip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 14h12v8H6z"/></svg>Save / Print</button>
+      <button class="btn btn-ghost" id="shareSlip"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v7a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7"/><path d="M16 6l-4-4-4 4"/><path d="M12 2v14"/></svg>Share PDF</button>
     </div>
-    <div class="sharehint">Or screenshot this slip to share on WhatsApp.</div>`;
+    <div class="sharehint">Share sends a PDF you can attach on WhatsApp.</div>`;
 
+  const _ad=document.getElementById('advDeductBtn');
+  if(_ad) _ad.onclick=async()=>{
+    let v=Math.max(0,parseInt((document.getElementById('advDeductAmt').value)||'0',10));
+    if(v<=0){ showToast('Enter an amount to deduct',null); return; }
+    if(v>bal){ v=bal; }
+    DB.advances[s.id]=DB.advances[s.id]||[];
+    DB.advances[s.id].push({id:uid(),type:'deducted',date:dedDate,amount:v});
+    await save(); openSalary(id); renderDashboard();
+    showToast(`₹${inr(v)} advance deducted from ${MONTHS[m]}`,null);
+  };
+  document.querySelectorAll('[data-fill]').forEach(b=>b.onclick=()=>{ const el=document.getElementById('advDeductAmt'); if(el) el.value=b.dataset.fill; });
   document.getElementById('printSlip').onclick=()=>window.print();
-  var _stt=document.getElementById('slipTitle'); if(_stt) _stt.textContent='Salary slip';
+  document.getElementById('shareSlip').onclick=()=>shareNode('slipPrint', `Salary-${s.name.replace(/\s+/g,'-')}-${MONTHS[m]}-${y}.pdf`, `Salary slip — ${s.name}, ${MONTHS[m]} ${y}`);
+  var _stt=document.getElementById('slipTitle'); if(_stt) _stt.innerHTML=`Salary<small>${s.name}</small>`;
   openSheet('slip');
 }
 
@@ -1064,6 +1146,7 @@ const IC={
   chevR:'<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>'
 };
 function openManage(){ manageView=null; renderManageBody(); openSheet('manage'); }
+function openAttendanceFor(id){ manageStaffId=id; attDate=firstOfMonth(new Date()); manageView='attendance'; renderManageBody(); openSheet('manage'); }
 function setManageTitle(t){ var el=document.getElementById('manageTitle'); if(el) el.textContent=t; }
 
 function staffCardsHTML(){
@@ -1198,29 +1281,24 @@ function renderManageBody(){
       const staffChips=DB.staff.map(st=>`<button data-rstaff="${st.id}" class="${repStaffId===st.id?'on':''}">${st.name.split(' ')[0]}</button>`).join('');
       const perChip=(v,l)=>`<button data-rperiod="${v}" class="${repPeriod===v?'on':''}">${l}</button>`;
       body.innerHTML=`${back}
-        <p class="field-hint" style="margin:0 2px 16px;">Pick a report, a person and a period — then view and save a PDF.</p>
+        <p class="field-hint" style="margin:0 2px 16px;">Pick a person and a period — then view and save the attendance PDF.</p>
 
-        <div class="att-h">Report</div>
-        <div class="seg seg-wide rep-type"><button data-rtype="attendance" class="${repType==='attendance'?'on':''}">Attendance</button><button data-rtype="payment" class="${repType==='payment'?'on':''}">Payment</button></div>
-
-        <div class="att-h" style="margin-top:20px;">Person</div>
+        <div class="att-h">Person</div>
         <div class="m-cal-staff">${staffChips}</div>
 
         <div class="att-h" style="margin-top:20px;">Period</div>
         <div class="rep-periods">${perChip('this','This month')}${perChip('last','Last month')}${perChip('l3','Last 3 months')}${perChip('custom','Custom')}</div>
         ${repPeriod==='custom'?`<div class="frow" style="margin-top:11px;"><input type="month" id="repFrom" value="${repFrom||ymAdd(nowYM,-2)}" max="${nowYM}"><input type="month" id="repTo" value="${repTo||nowYM}" max="${nowYM}"></div>`:''}
 
-        <button class="btn btn-primary rep-go" id="repGo" style="margin-top:22px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></svg>Generate ${repType==='attendance'?'attendance report':'payment statement'}</button>`;
+        <button class="btn btn-primary rep-go" id="repGo" style="margin-top:22px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></svg>Generate attendance report</button>`;
 
-      document.querySelectorAll('[data-rtype]').forEach(b=>b.onclick=()=>{ repType=b.dataset.rtype; renderManageBody(); });
       document.querySelectorAll('[data-rstaff]').forEach(b=>b.onclick=()=>{ repStaffId=b.dataset.rstaff; renderManageBody(); });
       document.querySelectorAll('[data-rperiod]').forEach(b=>b.onclick=()=>{ repPeriod=b.dataset.rperiod; renderManageBody(); });
       const rf=document.getElementById('repFrom'); if(rf) rf.onchange=()=>{ repFrom=rf.value; };
       const rt=document.getElementById('repTo'); if(rt) rt.onchange=()=>{ repTo=rt.value; };
       document.getElementById('repGo').onclick=()=>{
         if(repPeriod==='custom'){ const f=document.getElementById('repFrom'); const t=document.getElementById('repTo'); repFrom=f?f.value:repFrom; repTo=t?t.value:repTo; }
-        const months=periodMonths(repPeriod, repFrom, repTo);
-        if(repType==='attendance') openReport(repStaffId, months); else openStatement(repStaffId, months);
+        openReport(repStaffId, periodMonths(repPeriod, repFrom, repTo));
       };
     }
   }
@@ -1259,6 +1337,7 @@ function drawEditCal(){
 }
 function openReport(id, monthsYM){
   const s=DB.staff.find(x=>x.id===id); if(!s) return;
+  try{ preloadPdfLibs(); }catch(e){}
   if(!monthsYM || !monthsYM.length){ const endYM=ymStr(attDate.getFullYear(), attDate.getMonth()); monthsYM=[]; for(let i=5;i>=0;i--) monthsYM.push(ymAdd(endYM,-i)); }
   const rows=monthsYM.map(ym=>{ const p=ym.split('-').map(Number); const yy=p[0], mm=p[1]-1; return {yy,mm,c:computePay(s,yy,mm)}; });
   const tot=rows.reduce((a,r)=>{ a.leaves+=r.c.taken; a.paid+=r.c.paid; a.unpaid+=r.c.deductible; a.worked+=r.c.worked; a.ded+=r.c.leaveDeduction; return a; },{leaves:0,paid:0,unpaid:0,worked:0,ded:0});
@@ -1307,8 +1386,9 @@ function openReport(id, monthsYM){
 
       <div class="rep-foot">${s.paidLeaves>0?`Free leaves allowed: ${s.paidLeaves} per month before any cut. `:''}Deduction basis: monthly salary ÷ ${s.rateBasis==='30'?'30 days (fixed)':'the number of days in each month'}. Prepared with Abode · your household ledger.</div>
     </div>
-    <div class="slip-actions report-actions"><button class="btn btn-primary" id="printReport"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 14h12v8H6z"/></svg>Save / Print PDF</button></div>`;
+    <div class="slip-actions report-actions"><button class="btn btn-primary" id="printReport"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 14h12v8H6z"/></svg>Save / Print</button><button class="btn btn-ghost" id="shareReport"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v7a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7"/><path d="M16 6l-4-4-4 4"/><path d="M12 2v14"/></svg>Share PDF</button></div>`;
   document.getElementById('printReport').onclick=()=>window.print();
+  var _sr=document.getElementById('shareReport'); if(_sr) _sr.onclick=()=>{ var t=(document.getElementById('reportTitle').textContent||'Report'); shareNode('reportPrint', t.replace(/[^a-z0-9]+/gi,'-')+'.pdf', t); };
   openSheet('report');
 }
 
@@ -1322,6 +1402,7 @@ function periodMonths(period, fromYM, toYM){
 }
 function openStatement(id, monthsYM){
   const s=DB.staff.find(x=>x.id===id); if(!s) return;
+  try{ preloadPdfLibs(); }catch(e){}
   if(!monthsYM||!monthsYM.length) monthsYM=[ymStr(new Date().getFullYear(), new Date().getMonth())];
   const since=s.since||monthsYM[0];
   const firstYM=monthsYM[0];
@@ -1372,8 +1453,9 @@ function openStatement(id, monthsYM){
 
       <div class="rep-foot">Balance carries forward: an overpayment becomes a credit against the next month; a shortfall stays pending. Prepared with Abode · your household ledger.</div>
     </div>
-    <div class="slip-actions report-actions"><button class="btn btn-primary" id="printReport"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 14h12v8H6z"/></svg>Save / Print PDF</button></div>`;
+    <div class="slip-actions report-actions"><button class="btn btn-primary" id="printReport"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V2h12v7"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><path d="M6 14h12v8H6z"/></svg>Save / Print</button><button class="btn btn-ghost" id="shareReport"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v7a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7"/><path d="M16 6l-4-4-4 4"/><path d="M12 2v14"/></svg>Share PDF</button></div>`;
   document.getElementById('printReport').onclick=()=>window.print();
+  var _sr=document.getElementById('shareReport'); if(_sr) _sr.onclick=()=>{ var t=(document.getElementById('reportTitle').textContent||'Report'); shareNode('reportPrint', t.replace(/[^a-z0-9]+/gi,'-')+'.pdf', t); };
   openSheet('report');
 }
 
